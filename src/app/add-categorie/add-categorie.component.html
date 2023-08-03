@@ -1,0 +1,35 @@
+<section class="section section-divider white promo">
+<div class="container">
+  <h2 class="h2 section-title"><span class="span">{{ isUpdateMode ? 'Update Category' : 'Add Category' }}</span></h2>
+  <form (submit)="onSubmit()">
+  <div class="row">
+    <div class="col-25">
+      <label for="fname">Name</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="fname" name="firstname" placeholder="Name.." [(ngModel)]="categorie.nomCat">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="subject">Description</label>
+    </div>
+    <div class="col-75">
+      <textarea id="subject" name="subject" placeholder="description..." style="height:200px"[(ngModel)]="categorie.descriptionCat"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="subject">Image</label>
+    </div>
+    <div class="col-75">
+      <input type="file" name="myImage" (change)="extractFileName($event)" accept="image/png, image/gif, image/jpeg, image.jpg" [(ngModel)]="categorie.media"/>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <button class="btn btn-hover" type="submit" style="margin-inline: auto; width:50%  ">{{ isUpdateMode ? 'Update Category' : 'Add Category' }}</button>
+  </div>
+  </form>
+</div>
+</section>

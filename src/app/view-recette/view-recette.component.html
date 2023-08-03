@@ -1,0 +1,183 @@
+
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <section class="section section-divider white promo">
+
+  <body class="w3-light-grey">
+
+  <!-- Page Container -->
+  <div class="w3-content w3-margin-top" style="max-width:1400px;">
+    <div class="seven">
+      <h1>{{recette.nom}}</h1>
+    </div>
+
+    <!-- The Grid -->
+    <div class="w3-row-padding">
+
+      <!-- Left Column -->
+      <div class="w3-third">
+
+        <div class="w3-white w3-text-grey w3-card-4">
+          <div class="w3-display-container" >
+            <ng-image-slider [images]="imgCollection"[autoSlide]="1"
+            [imageSize]="{width: '100%', height: 350}"     [infinite]="false"
+            slideImage="1" #nav></ng-image-slider>
+
+          </div>
+          <div class="w3-container">
+            <h3 class="h3 section-title">
+              <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Preparation time : <span class="span">{{recette.dureePreparation}} min</span>
+            </h3>
+            <h3 class="h3 section-title">
+              <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Cooking time : <span class="span">{{recette.dureeCuisson}} min</span>
+            </h3>
+            <h3 class="h3 section-title">
+              <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Servings : <span class="span">{{recette.nbrPersonnes}} person(s)</span>
+            </h3>
+           <hr>
+           <br>
+          </div>
+        </div><br>
+
+      <!-- End Left Column -->
+      </div>
+
+      <!-- Right Column -->
+      <div class="w3-twothird">
+
+        <div class="w3-container w3-card w3-white w3-margin-bottom">
+          <h2 class="h2 section-title">
+            <span class="span">Ingredients</span>
+          </h2>
+          <div class="w3-container" >
+            <ul class="custom-list" *ngFor="let ingredient of recette.ingredients " style="margin-bottom: -2%;">
+              <li class="custom-item">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                <span class="span">{{ingredient.nom}}</span>
+              </li>
+              <hr>
+              </ul>
+          </div>
+
+        </div>
+
+        <div class="w3-container w3-card w3-white">
+          <h2 class="h2 section-title">
+            <span class="span">Steps</span>
+          </h2>
+          <div class="w3-container">
+            <ul class="custom-list" *ngFor="let etape of recette.etapes; let i = index">
+
+              <li class="custom-item">
+                <ion-icon name="shield-checkmark"></ion-icon>
+              <dl>
+                <dt>
+                <span class="span">Step {{ i +1 }} : </span>
+                </dt>
+                <dd>{{etape.description }}</dd>
+                </dl>
+              </li>
+              </ul>
+            <hr>
+          </div>
+
+
+      <!-- End Right Column -->
+      </div>
+
+    <!-- End Grid -->
+    </div>
+    <div class="w3-treethird">
+    <form action="" class="footer-form">
+
+      <p class="footer-list-title">Leave a Comment</p>
+
+      <div class="input-wrapper">
+
+        <input type="text" name="full_name" required placeholder="Your Name" aria-label="Your Name"
+          class="input-field">
+
+        <input type="email" name="email_address" required placeholder="Email" aria-label="Email"
+          class="input-field">
+
+      </div>
+
+
+      <textarea name="message" required placeholder="Message" aria-label="Message" class="input-field"></textarea>
+
+      <button type="submit" class="btn">Post Comment</button>
+
+    </form>
+    </div>
+
+    <!-- End Page Container -->
+  </div>
+
+
+</div>
+
+
+</body>
+
+</section>
+
+    <!-- <section style="background-color: #eee;">
+      <div class="container my-5 py-5">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-12 col-lg-10 col-xl-8">
+            <h3>Comments : </h3><br>
+            <div class="card">
+              <div class="card-body" *ngFor="let comment of recette.commentaires">
+                <div class="d-flex flex-start align-items-center">
+                  <img class="rounded-circle shadow-1-strong me-3"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                    height="60" />
+                  <div >
+                    <h6 class="fw-bold text-primary mb-1">{{comment.proprietaire?.nomComplet}}</h6>
+                    <p class="text-muted small mb-0">
+                      Shared publicly - Jan 2020
+                    </p>
+                  </div>
+                </div>
+
+                <p class="mt-3 mb-4 pb-2">
+                  {{comment.message}}
+                </p>
+
+                <div class="small d-flex justify-content-start">
+                  <a href="#!" class="d-flex align-items-center me-3">
+                    <i class="far fa-thumbs-up me-2"></i>
+                    <p class="mb-0">Like</p>
+                  </a>
+                  <a href="#!" class="d-flex align-items-center me-3">
+                    <i class="far fa-comment-dots me-2"></i>
+                    <p class="mb-0">Comment</p>
+                  </a>
+                  <a href="#!" class="d-flex align-items-center me-3">
+                    <i class="fas fa-share me-2"></i>
+                    <p class="mb-0">Share</p>
+                  </a>
+                </div>
+              </div>
+              <form (ngSubmit)="CommentRecipe(recette.id)">
+                <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                <div class="d-flex flex-start w-100">
+                  <img class="rounded-circle shadow-1-strong me-3"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="100"
+                    height="40" />
+                  <div class="form-outline w-100">
+                    <textarea class="form-control" id="textAreaExample" rows="4"
+                      style="background: #fff;"></textarea>
+                    <label class="form-label" for="textAreaExample">Message</label>
+                  </div>
+                </div>
+                <div class="float-end mt-2 pt-1">
+                  <button type="button" value="Submit" class="btn btn-primary btn-sm">Post comment</button>
+                </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->

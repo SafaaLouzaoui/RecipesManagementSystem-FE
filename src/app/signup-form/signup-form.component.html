@@ -1,0 +1,109 @@
+<body>
+  <!-- partial:index.partial.html -->
+  <div class="box-form">
+    <div class="left">
+      <div class="overlay"></div>
+    </div>
+
+    <div class="right">
+      <form>
+        <h2 class="h2 section-title"><span class="span">Sign Up</span></h2>
+        <p>
+          Already Have an account ?<a [routerLink]="['/login']">Sign in</a>
+        </p>
+        <div class="inputs">
+        <input type="text" placeholder="Name"   [(ngModel)]="nom_complet" [ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Username"   [(ngModel)]="username"[ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Enter your email"  [(ngModel)]="adresse_mail" [ngModelOptions]="{standalone: true}"/>
+        <input type="password" placeholder="Enter your password"  [(ngModel)]="mot_de_passe" [ngModelOptions]="{standalone: true}"/>
+      </div>
+      <input type="submit" class="btn btn-hover" (click)="addUser()" value="Sign up ">
+
+      </form>
+    </div>
+  </div>
+
+  <!-- partial -->
+</body>
+
+
+
+
+<!-- <div class="container-sm d-flex justify-content-center align-items-center min-vh-100">
+
+  <div class="row rounded-5 bg-white shadow box-area">
+
+      <div class="col " [ngStyle]="{margin:'inherit'}">
+
+
+          <img [src]="image_login" class="img-fluid rounded-5 rounded-end  " [ngStyle]="{'height':'600px','width':'500px','object-fit':' cover'}" >
+
+
+      </div>
+
+
+      <div class="col p-5 ">
+
+          <div class="row text-center">
+              <h3 class="text-uppercase fw-bold" [ngStyle]="{color:'#12161f','font-family':'Bugaki,sans serif'}"> Sign
+                  up</h3>
+          </div>
+
+          <form  [ngStyle]="{color:'#12161f','font-family':'Bugaki,sans serif'}">
+              <div class="form-group  mb-2 mt-4"[ngStyle]="{color:'#12161f','font-family':'Libre Franklin Medium, sans-serif'}">
+                  <label class="form-label  fw-bold" for="inlineFormInputGroupUsername2" [ngStyle]="{color:'#12161f','font-family':'Libre Franklin Medium, sans-serif'}"  >Name </label>
+                  <span id="prenom" class="alert-danger"></span>
+                  <input type="text" class="form-control form-control-sm bg-light fs-6" id="name" placeholder="Name" [(ngModel)]="nom_complet"
+                      [ngModelOptions]="{standalone: true}" />
+              </div>
+              <div class="form-group  mb-2 mt-2">
+                  <label class="form-label  fw-bold" for="inlineFormInputGroupUsername2" [ngStyle]="{color:'#12161f','font-family':'Libre Franklin Medium, sans-serif'}">Username</label>
+                  <span id="nom" class="alert-danger"></span>
+                  <input type="text" class="form-control form-control-sm bg-light fs-6" id="username" placeholder="Username" [(ngModel)]="username"
+                      [ngModelOptions]="{standalone: true}" />
+              </div>
+
+
+
+              <div class="form-group mb-2 mt-2">
+                  <label class="form-label  fw-bold " [ngStyle]="{color:'#12161f','font-family':'Libre Franklin Medium, sans-serif'}">Email</label>
+                  <span id="nom" class="alert-danger"></span>
+                  <input class="form-control form-control-sm bg-light fs-6" type="text" id="adresseMail"
+                      placeholder="Enter your Email" [(ngModel)]="adresse_mail"
+                      [ngModelOptions]="{standalone: true}" />
+              </div>
+
+
+              <div class="form-group mb-2 mt-2">
+                  <label class="form-label  fw-bold" [ngStyle]="{color:'#12161f','font-family':'Libre Franklin Medium, sans-serif'}">Password</label>
+                  <span class="text-danger" id="alert_pass"></span>
+                  <input class="form-control form-control-sm bg-light fs-6" id="password" type="password"
+                      [(ngModel)]="mot_de_passe" [ngModelOptions]="{standalone: true}"
+                      placeholder="Enter your password" />
+
+              </div>
+              <div class="form-group mb-2 mt-2">
+                  <label class="form-label  fw-bold" [ngStyle]="{color:'#12161f','font-family':'Libre Franklin Medium, sans-serif'}">Confirm Password</label>
+                  <input class="form-control form-control-sm bg-light fs-6" id="pass" type="password"
+
+                      placeholder="Enter your password" />
+
+              </div>
+              <br>
+
+
+
+
+
+              <div class="row">
+                  <input type="submit" class="btn btn-lg bg-gradient w-100 fw-bold fs-6 text-white" [ngStyle]="{background:'#b8bdc3','font-family':'Libre Franklin Medium, sans-serif'}" (click)="addUser()" value="Sign up ">
+                 <p>Already Have an account ? <a class="form-label text-decoration-none text-primary "  [routerLink]="['/login']" >Sign in</a></p>
+
+              </div>
+
+          </form>
+      </div>
+
+
+  </div>
+</div> -->
