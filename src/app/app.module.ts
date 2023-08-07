@@ -26,6 +26,8 @@ import { ViewCategorieComponent } from './view-categorie/view-categorie.componen
 import { ListCategorieComponent } from './list-categorie/list-categorie.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
+import { AddRecetteComponent } from './add-recette/add-recette.component';
+import { UpdateRecetteComponent } from './update-recette/update-recette.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ListIngredientComponent } from './list-ingredient/list-ingredient.compo
     ListCategorieComponent,
     AddIngredientComponent,
     ListIngredientComponent,
+    UpdateRecetteComponent,
+    AddRecetteComponent
   ],
   imports: [
     BrowserModule,

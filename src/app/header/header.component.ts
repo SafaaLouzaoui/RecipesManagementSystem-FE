@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   isAddRecettesPage() {
-    return this.currentUrl === '/recettes/add';
+    return this.currentUrl === '/recettes_add';
   }
 
   isUpdateRecettePage() {

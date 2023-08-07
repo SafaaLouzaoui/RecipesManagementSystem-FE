@@ -12,7 +12,7 @@ export class ListIngredientComponent {
   ingredients: Ingredient[]=[]
   selectedIngredients: any;
 
-  constructor(private IngredientService: IngredientService, private router: Router) {}
+  constructor(private IngredientService: IngredientService, private route: Router) {}
 
   ngOnInit(): void {
     this.fetchIngredient();
@@ -35,7 +35,7 @@ export class ListIngredientComponent {
     if (confirm('Are you sure you want to delete ?')) {
       this.IngredientService.deleteIngredient(id).subscribe(
         () => {
-          this.router.navigate(['/ingredients']);
+         this.route.navigate(['/ingredients']);
         },
         error => {
           console.log(error);
@@ -44,7 +44,7 @@ export class ListIngredientComponent {
     }
   }
   updateIngredient(id: number): void {
-    this.router.navigate(['ingredients/update',id]);
+    this.route.navigate(['ingredients/update',id]);
   }
 
 

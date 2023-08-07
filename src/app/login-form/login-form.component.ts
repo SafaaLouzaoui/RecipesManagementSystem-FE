@@ -30,54 +30,57 @@ export class LoginFormComponent {
 
         if (resultData.message === "Login Success (User)") {
 
-          this.router.navigate(['/profil/'+resultData.id]);
-          sessionStorage.setItem('session',resultData.id);
-          sessionStorage.setItem('session2', resultData.message);
-           const userId = resultData.id;
-           const userpos = resultData.message
-          this.userService.setUserId(userId);
-          this.userService.setUserPos(userpos);
+          localStorage.setItem('token',Math.random().toString());
+          this.router.navigate(['/recettes/add']);
+          // this.router.navigate(['/profil/'+resultData.id]);
+          // sessionStorage.setItem('session',resultData.id);
+          // sessionStorage.setItem('session2', resultData.message);
+          //  const userId = resultData.id;
+          //  const userpos = resultData.message
+          // this.userService.setUserId(userId);
+          // this.userService.setUserPos(userpos);
 
-
-
-        }
-        else if (resultData.message === "Login Success (Moderator)") {
-          this.router.navigate(['/moderateur/'+resultData.id]);
-          sessionStorage.setItem('session', resultData.id);
-          sessionStorage.setItem('session2', resultData.message);
-          const userId = resultData.id;
-          const userpos = resultData.message
-         this.userService.setUserId(userId);
-         this.userService.setUserPos(userpos);
 
 
 
         }
+        // else if (resultData.message === "Login Success (Moderator)") {
+        //   this.router.navigate(['/moderateur/'+resultData.id]);
+        //   sessionStorage.setItem('session', resultData.id);
+        //   sessionStorage.setItem('session2', resultData.message);
+        //   const userId = resultData.id;
+        //   const userpos = resultData.message
+        //  this.userService.setUserId(userId);
+        //  this.userService.setUserPos(userpos);
+
+
+
+        // }
         else if (resultData.message === "Ce compte a été bloqué ou Supprimer" && resultData.status === false
         && resultData.id === null ) {
         alert('Ce compte a été bloqué ou Supprimer');
 
         }
-        else if (resultData.message === "Rôle inconnu") {
-          this.router.navigate(['/login']);
-          alert('Login Failed');
+        // else if (resultData.message === "Rôle inconnu") {
+        //   this.router.navigate(['/login']);
+        //   alert('Login Failed');
 
-        }
+        // }
         else if (resultData.message === "Mot de passe incorrect") {
           this.router.navigate(['/login']);
           alert('password Not Match');
 
         }
-        else if (resultData.message === "Login Success (Administrator)") {
-          sessionStorage.setItem('session', resultData.id);
-          sessionStorage.setItem('session2', resultData.message);
-          this.router.navigate(['/admin']);
-          const userId = resultData.id;
-          const userpos = resultData.message
-         this.userService.setUserId(userId);
-         this.userService.setUserPos(userpos);
+        // else if (resultData.message === "Login Success (Administrator)") {
+        //   sessionStorage.setItem('session', resultData.id);
+        //   sessionStorage.setItem('session2', resultData.message);
+        //   this.router.navigate(['/admin']);
+        //   const userId = resultData.id;
+        //   const userpos = resultData.message
+        //  this.userService.setUserId(userId);
+        //  this.userService.setUserPos(userpos);
 
-        }
+        // }
 
         else if (resultData.message === "L'adresse e-mail n'existe pas") {
           this.router.navigate(['/login']);
