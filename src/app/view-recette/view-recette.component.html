@@ -1,127 +1,154 @@
-
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <section class="section section-divider white promo">
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<section class="section section-divider white promo">
   <body class="w3-light-grey">
-
-  <!-- Page Container -->
-  <div class="w3-content w3-margin-top" style="max-width:1400px;">
-    <div class="seven">
-      <h1>{{recette.nom}}</h1>
-    </div>
-
-    <!-- The Grid -->
-    <div class="w3-row-padding">
-
-      <!-- Left Column -->
-      <div class="w3-third">
-
-        <div class="w3-white w3-text-grey w3-card-4">
-          <div class="w3-display-container" >
-            <ng-image-slider [images]="imgCollection"[autoSlide]="1"
-            [imageSize]="{width: '100%', height: 350}"     [infinite]="false"
-            slideImage="1" #nav></ng-image-slider>
-
-          </div>
-          <div class="w3-container">
-            <h3 class="h3 section-title">
-              <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Preparation time : <span class="span">{{recette.dureePreparation}} min</span>
-            </h3>
-            <h3 class="h3 section-title">
-              <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Cooking time : <span class="span">{{recette.dureeCuisson}} min</span>
-            </h3>
-            <h3 class="h3 section-title">
-              <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Servings : <span class="span">{{recette.nbrPersonnes}} person(s)</span>
-            </h3>
-           <hr>
-           <br>
-          </div>
-        </div><br>
-
-      <!-- End Left Column -->
+    <!-- Page Container -->
+    <div class="w3-content w3-margin-top" style="max-width: 1400px">
+      <div class="seven">
+        <h1>{{ recette.nom }}</h1>
       </div>
 
-      <!-- Right Column -->
-      <div class="w3-twothird">
-
-        <div class="w3-container w3-card w3-white w3-margin-bottom">
-          <h2 class="h2 section-title">
-            <span class="span">Ingredients</span>
-          </h2>
-          <div class="w3-container" >
-            <ul class="custom-list" *ngFor="let ingredient of recette.ingredients " style="margin-bottom: -2%;">
-              <li class="custom-item">
-                <ion-icon name="checkmark-outline"></ion-icon>
-                <span class="span">{{ingredient.nom}}</span>
-              </li>
-              <hr>
-              </ul>
+      <!-- The Grid -->
+      <div class="w3-row-padding">
+        <!-- Left Column -->
+        <div class="w3-third">
+          <div class="w3-white w3-text-grey w3-card-4">
+            <div class="w3-display-container">
+              <ng-image-slider
+                [images]="imgCollection"
+                [autoSlide]="1"
+                [imageSize]="{ width: '100%', height: 350 }"
+                [infinite]="false"
+                slideImage="1"
+                #nav
+              ></ng-image-slider>
+            </div>
+            <div class="w3-container">
+              <h3 class="h3 section-title">
+                <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i
+                >Preparation time :
+                <span class="span">{{ recette.dureePreparation }} min</span>
+              </h3>
+              <h3 class="h3 section-title">
+                <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i
+                >Cooking time :
+                <span class="span">{{ recette.dureeCuisson }} min</span>
+              </h3>
+              <h3 class="h3 section-title">
+                <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i
+                >Servings :
+                <span class="span">{{ recette.nbrPersonnes }} person(s)</span>
+              </h3>
+              <hr />
+              <br />
+            </div>
           </div>
+          <br />
 
+          <!-- End Left Column -->
         </div>
 
-        <div class="w3-container w3-card w3-white">
-          <h2 class="h2 section-title">
-            <span class="span">Steps</span>
-          </h2>
-          <div class="w3-container">
-            <ul class="custom-list" *ngFor="let etape of recette.etapes; let i = index">
-
-              <li class="custom-item">
-                <ion-icon name="shield-checkmark"></ion-icon>
-              <dl>
-                <dt>
-                <span class="span">Step {{ i +1 }} : </span>
-                </dt>
-                <dd>{{etape.description }}</dd>
-                </dl>
-              </li>
+        <!-- Right Column -->
+        <div class="w3-twothird">
+          <div class="w3-container w3-card w3-white w3-margin-bottom">
+            <h2 class="h2 section-title">
+              <span class="span">Ingredients</span>
+            </h2>
+            <div class="w3-container">
+              <ul
+                class="custom-list"
+                *ngFor="let ingredient of recette.ingredients"
+                style="margin-bottom: -2%"
+              >
+                <li class="custom-item">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                  <span class="span">{{ ingredient.nom }}</span>
+                </li>
+                <hr />
               </ul>
-            <hr>
+            </div>
           </div>
 
+          <div class="w3-container w3-card w3-white">
+            <h2 class="h2 section-title">
+              <span class="span">Steps</span>
+            </h2>
+            <div class="w3-container">
+              <ul
+                class="custom-list"
+                *ngFor="let etape of recette.etapes; let i = index"
+              >
+                <li class="custom-item">
+                  <ion-icon name="shield-checkmark"></ion-icon>
+                  <dl>
+                    <dt>
+                      <span class="span">Step {{ i + 1 }} : </span>
+                    </dt>
+                    <dd>{{ etape.description }}</dd>
+                  </dl>
+                </li>
+              </ul>
+              <hr />
+            </div>
 
-      <!-- End Right Column -->
+            <!-- End Right Column -->
+          </div>
+
+          <!-- End Grid -->
+        </div>
+        <div class="w3-treethird">
+          <div class="footer-form">
+            <form (ngSubmit)="postComment()">
+              <p class="footer-list-title">Leave a Comment</p>
+
+              <textarea
+                name="message"
+                required
+                [placeholder]="
+                  'Comment to ' + (createurRecette?.username || 'Unknown User')
+                "
+                aria-label="Message"
+                class="input-field"
+                [(ngModel)]="comment"
+
+              ></textarea>
+
+              <button type="submit" class="btn">Post Comment</button>
+            </form>
+            <br />
+            <p class="footer-list-title">Comments</p>
+            <div
+              *ngFor="let comment of recette.commentaires"
+              class="comments-container"
+            >
+              <div class="comment">
+                <div class="comment-avatar">
+                  <!-- Replace this with the URL of the commenter's avatar image -->
+                  <img [src]="comment.proprietaire?.image || '../../assets/images/avatar-1.jpg'" alt="Default User Avatar" />
+                  <!-- <img src="../../assets/images/avatar-1.jpg" alt=""> -->
+                </div>
+                <div class="comment-content">
+                  <p class="comment-author" style="color: black">{{ comment.proprietaire?.nomComplet }}</p>
+                  <p class="comment-text" style="color: black">
+                    {{ comment.message }}
+                  </p>
+                  <p class="comment-timestamp">{{ comment.created_at_diff }}</p>
+                </div>
+                <button  class="removeButt" *ngIf="comment.id !== undefined" (click)="deleteComment(comment.id)">X</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Page Container -->
       </div>
-
-    <!-- End Grid -->
     </div>
-    <div class="w3-treethird">
-    <form action="" class="footer-form">
-
-      <p class="footer-list-title">Leave a Comment</p>
-
-      <div class="input-wrapper">
-
-        <input type="text" name="full_name" required placeholder="Your Name" aria-label="Your Name"
-          class="input-field">
-
-        <input type="email" name="email_address" required placeholder="Email" aria-label="Email"
-          class="input-field">
-
-      </div>
-
-
-      <textarea name="message" required placeholder="Message" aria-label="Message" class="input-field"></textarea>
-
-      <button type="submit" class="btn">Post Comment</button>
-
-    </form>
-    </div>
-
-    <!-- End Page Container -->
-  </div>
-
-
-</div>
-
-
-</body>
-
+  </body>
 </section>
 
-    <!-- <section style="background-color: #eee;">
+<!-- <section style="background-color: #eee;">
       <div class="container my-5 py-5">
         <div class="row d-flex justify-content-center">
           <div class="col-md-12 col-lg-10 col-xl-8">

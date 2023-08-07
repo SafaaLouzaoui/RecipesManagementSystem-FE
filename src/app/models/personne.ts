@@ -10,6 +10,7 @@ export class Personne {
   nomComplet?:string;
   statut?:string;
   username?:string;
+  image?: string;
   dateCreation?:string;
   profile?:Profil;
   abonnees?:Personne[];

@@ -1,0 +1,247 @@
+
+
+.myContainer {
+  width: 800px;
+  padding: 10px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  box-shadow: 2px 5px 10px 5px gray;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+.two-col {
+  display: flex;
+}
+
+/* input-list.component.css */
+/* .input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+  width: 100%;
+} */
+
+label {
+  font-weight: bold;
+}
+
+input ,select, textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100% !important;
+}
+
+datalist {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.bossDiv {
+
+}
+.bossBtn {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 0px 0px rgb(244, 131, 1);
+}
+.headTitle {
+  background-color: rgb(244, 131, 1);
+  border-radius: 10px 10px 0px 0px;
+  height: 70px;
+}
+
+
+/* Container for the ingredients form */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Style for the "Ingredients" heading */
+.form-group h5 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Style for the ingredient container */
+.form-group > div {
+  margin-bottom: 10px;
+}
+
+/* Style for the ingredient select box */
+.form-group select.form-select {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for the two-column layout of the inputs */
+.two-col {
+  display: flex;
+}
+
+.two-col input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for the "Add Ingredient" and "Remove" buttons */
+.myButton {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0px 5px 0px 0px #318234;
+  font-size: small;
+}
+
+.removeButt {
+  background-color: #f44336; /* Red color for the "Remove" button */
+  box-shadow: 0px 5px 0px 0px #d4261a !important;
+
+}
+
+.myButton:hover {
+  opacity: 0.8;
+}
+
+/* ... Existing styles ... */
+
+/* Style for the "Add Ingredient" button */
+.myButton.addButt {
+  margin-top: 10px;
+  transition: margin-top 0.3s ease; /* Add a transition for margin-top property */
+}
+
+/* Animation style when button is clicked */
+.myButton.addButt.clicked {
+  margin-top: 15px; /* Move the button 5px down when clicked */
+}
+
+
+/* Categorie styles form */
+* {
+  box-sizing: border-box;
+}
+
+
+.h2{
+  text-align: center;
+  }
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  background-color: white;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  color: var(--rich-black-fogra-29);
+  font-family: var(--ff-rubik);
+}
+
+.button {
+  background-color: var(--dark-orange);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+
+}
+
+input[type=submit]:hover {
+  background-color: var(--rich-black-fogra-29);
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4), 2px 2px 4px rgba(0, 0, 0, 0.4);
+  margin-top: 4%;
+  width: 80% ;
+
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+input[type=file]::file-selector-button {
+  margin-top: 1%;
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
+}
+/* YourComponent.component.css */
+.form-group {
+  /* Your existing styles for .form-group (if any) */
+}
+
+.input-container {
+  /* Your existing styles for .input-container (if any) */
+}
+
+.media-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Make the image display with the same height as the input */
+.image-preview {
+  height: 30px; /* Adjust the height as needed */
+  margin-left: 10px; /* Adjust the spacing between the input and the image */
+}
