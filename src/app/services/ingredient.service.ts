@@ -22,8 +22,8 @@ export class IngredientService {
   public getIngredientById(id: number): Observable<Ingredient> {
     return this.http.get<Ingredient>(`${this.url3}/${id}`);
   }
-  public updateIngredient(id: number, categorie: Ingredient): Observable<Ingredient> {
-    return this.http.put<Ingredient>(`${this.url4}/${id}`, Ingredient );
+  public updateIngredient(id: number, ingredient: Ingredient): Observable<Ingredient> {
+    return this.http.put<Ingredient>(`${this.url4}/${id}`, ingredient );
   }
   deleteIngredient(id: number): Observable<Ingredient> {
     return this.http.delete<Ingredient>(`${this.url5}/${id}`);

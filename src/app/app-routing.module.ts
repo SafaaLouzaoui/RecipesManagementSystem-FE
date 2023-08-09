@@ -12,6 +12,7 @@ import { AddCategorieComponent } from './add-categorie/add-categorie.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
+import { UpdateRecetteComponent } from './update-recette/update-recette.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: 'recette/:id', component: ViewRecetteComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path:'header',component:HeaderComponent},
   {path:'footer',component:FooterComponent},
   {path:'home',component:HomeComponent},
+  {path:'recettes/update/:id',component:UpdateRecetteComponent},
   {path:'categories',component:ListCategorieComponent},
   {path:'categories/add',component:AddCategorieComponent},
   {path:'categories/update/:id',component:AddCategorieComponent},

@@ -249,12 +249,12 @@
           <input
           type="file"
           id="inputList"
-          (change)="onMediaFileSelected($event, i)"
+          (change)="onMediaFileUpdated($event, i)"
           accept="image/jpeg, image/png, image/gif"
         />
         <img *ngIf="media.url" [src]="media.url" alt="Image" class="image-preview">
         </div>
-
+        <span style="color: red;">{{ errorMedia[i] }}</span>
         <button
           type="button"
           class="myButton removeButt"
@@ -263,6 +263,9 @@
           Remove
         </button>
       </div>
+      <button type="button" class="myButton" (click)="addMedia()">
+        Add media
+      </button>
     </div>
 
     <div class="form-group">

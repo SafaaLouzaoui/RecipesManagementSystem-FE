@@ -19,6 +19,10 @@ export class ListIngredientComponent {
 
 
   }
+  refreshPage() {
+    // Reload the current page to display the updated comments
+    window.location.reload();
+  }
 
   fetchIngredient(): void {
     this.IngredientService.getIngredients().subscribe(
@@ -35,7 +39,7 @@ export class ListIngredientComponent {
     if (confirm('Are you sure you want to delete ?')) {
       this.IngredientService.deleteIngredient(id).subscribe(
         () => {
-         this.route.navigate(['/ingredients']);
+         this.refreshPage();
         },
         error => {
           console.log(error);

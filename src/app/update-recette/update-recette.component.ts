@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { MotCleService } from './../services/mot-cle.service';
 import { Besoin } from './../models/besoin';
-import { Media } from './../models/media';
 import { MotCle } from './../models/mot-cle';
 import { Categorie } from './../models/categorie';
 import { Quantite } from './../models/quantite';
@@ -13,7 +12,18 @@ import { Personne } from './../models/personne';
 import { Recette } from '../models/recette';
 import { CategorieService } from '../services/categorie.service';
 import { IngredientService } from '../services/ingredient.service';
+import { MediaType } from '../models/media-type';
 
+interface Media {
+  id?:number;
+  url?:string;
+  personne?:Personne;
+  mediaType?:MediaType;
+  besoins?:Besoin[];
+  etape?:Etape;
+  recette?:Recette;
+  file?: File; // We'll store the actual file here
+}
 @Component({
   selector: 'app-update-recette',
   templateUrl: './update-recette.component.html',
@@ -26,6 +36,8 @@ export class UpdateRecetteComponent implements OnInit {
   categoriess: any;
   ingrediantss: any;
   motCless: any;
+
+  errorMedia: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -61,7 +73,7 @@ export class UpdateRecetteComponent implements OnInit {
       () => {
         console.log('Recette updated successfully.');
         alert('Recette updated successfully');
-        this.router.navigate(['/recettes', this.id]);
+        this.router.navigate(['recettes']);
       },
       error => {
         console.log(error);
@@ -161,15 +173,49 @@ export class UpdateRecetteComponent implements OnInit {
       const file = inputElement.files[0];
       const reader = new FileReader();
 
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        const base64Url = reader.result as string;
+        const maxTextSize = 65535;
+
+        if (base64Url.length > maxTextSize) {
+          this.errorMedia[index] = 'Image URL size exceeds the maximum allowed limit for TEXT type.'
+          return;
+        } else {
+          this.errorMedia[index] = '';
+        }
+
+        this.recette.medias[index] = {
+          url: base64Url,
+          file: file,
+
+        };
+      };
+    }
+  }
+
+  onMediaFileUpdated(event: Event, index: number): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+      const reader = new FileReader();
+
       // Read the file as a Data URL (Base64)
       reader.readAsDataURL(file);
 
-      // Once the file is read, store the URL and file in the media object
+      // Once the file is read, update the URL and file in the media object
       reader.onload = () => {
-        this.recette.medias[index] = {
-          url: reader.result as string,
-          file: file
-        };
+        // Assuming that `this.recette.medias` is an array of media objects
+        if (index >= 0 && index < this.recette.medias.length) {
+          this.recette.medias[index] = {
+            url: reader.result as string,
+            file: file
+          };
+        } else {
+          // Handle the case where the specified index is out of bounds
+          console.error("Invalid index for updating media.");
+        }
       };
     }
   }
@@ -182,6 +228,7 @@ export class UpdateRecetteComponent implements OnInit {
 
   removeMedia(index: number) :void {
     this.recette.medias.splice(index, 1);
+    this.errorMedia.splice(index, 1);
   }
 
   cancel(): void {

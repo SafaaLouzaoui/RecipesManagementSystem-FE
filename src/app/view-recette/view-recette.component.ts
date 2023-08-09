@@ -35,7 +35,7 @@ export class ViewRecetteComponent {
     private router: Router,
     private http: HttpClient,
     private personneService: PersonneService,
-    private commentaireService: CommentaireService,
+    private commentaireService: CommentaireService
   ) {}
 
   ngOnInit(): void {
@@ -118,7 +118,7 @@ export class ViewRecetteComponent {
     const newComment: Commentaire = {
       message: this.comment,
       createurRecette: this.recette?.utilisateurCreateur,
-      proprietaire: { id: 9 }
+      proprietaire: { id: 19 }
     };
 
     if (this.recette?.id !== undefined) {

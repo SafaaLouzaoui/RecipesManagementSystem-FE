@@ -40,7 +40,7 @@ export class AddRecetteComponent implements OnInit {
   dureePreparation: number = 0;
   dureeCuisson: number = 0;
   nbrPersonnes: number = 1;
-  utilisateurCreateur: Personne = { id: 9 };
+  utilisateurCreateur: Personne = { id: 19 };
   quantites: Quantite[] = [];
   ingredients: Ingredient[] = [];
   categories: Categorie[] = [];
@@ -158,6 +158,7 @@ export class AddRecetteComponent implements OnInit {
         (response) => {
           console.log('New recette created successfully!', response);
           alert('New recette created successfully!' + response);
+          this.router.navigate(['recettes'])
           // Handle success, e.g., show a success message or navigate to another page
         },
         (error) => {

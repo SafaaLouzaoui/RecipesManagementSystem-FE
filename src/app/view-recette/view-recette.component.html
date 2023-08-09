@@ -72,6 +72,25 @@
             </div>
           </div>
 
+          <div class="w3-container w3-card w3-white w3-margin-bottom">
+            <h2 class="h2 section-title">
+              <span class="span">Besoins</span>
+            </h2>
+            <div class="w3-container">
+              <ul
+                class="custom-list"
+                *ngFor="let besoin of recette.besoins"
+                style="margin-bottom: -2%"
+              >
+                <li class="custom-item">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                  <span class="span">{{ besoin.nom }}</span>
+                </li>
+                <hr />
+              </ul>
+            </div>
+          </div>
+
           <div class="w3-container w3-card w3-white">
             <h2 class="h2 section-title">
               <span class="span">Steps</span>

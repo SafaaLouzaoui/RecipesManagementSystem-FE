@@ -51,7 +51,7 @@ export class AddIngredientComponent {
     this.IngredientService.createIngredient(Ingredient).subscribe(
       () => {
         console.log('Catégorie ajoutée avec succès');
-        this.router.navigate(['/ingredients']);
+        this.router.navigate(['ingredients']);
 
       },
       error => {
@@ -68,9 +68,8 @@ export class AddIngredientComponent {
     this.IngredientService.updateIngredient(this.id,Ingredient).subscribe(
       () => {
         console.log('category updated successfully.');
-        this.router.navigate(['/ingredients']);
+        this.router.navigate(['ingredients']);
         console.log(Ingredient)
-        window.history.back
 
       },
       error => {
