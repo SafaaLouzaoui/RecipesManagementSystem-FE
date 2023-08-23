@@ -14,8 +14,7 @@ export class RecetteService {
   private apiUrl4 = 'http://localhost:8083/api/v1/recettes/lire';
   private apiUrl5 = 'http://localhost:8083/api/v1/recettes/supprimer';
   private apiUrl6 = 'http://localhost:8083/api/v1/quantites/lireTous';
-  private apiUrl7 =
-    'http://localhost:8083/api/v1/recettes/recettesByCategorie/';
+  private apiUrl7 = 'http://localhost:8083/api/v1/recettes/recettesByCategorie/';
 
   constructor(private http: HttpClient) {}
 
@@ -44,5 +43,5 @@ export class RecetteService {
   }
   public recettesByCategorie(id?: number): Observable<Recette> {
     return this.http.get(this.apiUrl7 + id);
-  } 
+  }
 }

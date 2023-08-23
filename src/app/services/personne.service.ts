@@ -14,7 +14,7 @@ export class PersonneService {
   url4 = 'http://localhost:8083/api/v1/utilisateurs/modifier/';
   url5 = 'http://localhost:8083/api/v1/utilisateurs/activer/';
   url6 = 'http://localhost:8083/api/v1/utilisateurs/promote/';
-  url7 = 'http://localhost:8083/api/v1/utilisateurs/connexion';
+
 
   constructor(private http: HttpClient) {}
   userpos?: any;
@@ -66,9 +66,9 @@ export class PersonneService {
     return this.http.post<Personne>(this.url6 + id, personne1);
   }
 
-  public LoginUser(personne?: Personne): Observable<Object> {
-    return this.http.post(this.url7, personne);
-  }
+  // public LoginUser(personne?: Personne): Observable<Object> {
+  //   return this.http.post(this.url7, personne);
+  // }
   public Abonner(
     id: number,
     idd: number,

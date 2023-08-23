@@ -1,321 +1,525 @@
-<div class="myContainer">
-  <header class="headTitle">
-    <h1
-      style="
-        text-align: center;
-        color: white;
-        margin-top: 0px;
-        padding-top: 5px;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-      "
-    >
-      Create New Recipe
-    </h1>
-  </header>
-  <form (ngSubmit)="createRecette()">
-    <div class="form-group">
-      <label for="nom">Recipe Name:</label>
-      <input type="text" id="nom" name="nom" [(ngModel)]="nom" />
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea
-        id="description"
-        name="description"
-        [(ngModel)]="description"
-      ></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="origine">Origin:</label>
-      <input type="text" id="origine" name="origine" [(ngModel)]="origine" />
-    </div>
-
-    <div class="form-group">
-      <label for="dureePreparation">Preparation Time (minutes):</label>
-      <input
-        type="number"
-        id="dureePreparation"
-        name="dureePreparation"
-        [(ngModel)]="dureePreparation"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="dureeCuisson">Cooking Time (minutes):</label>
-      <input
-        type="number"
-        id="dureeCuisson"
-        name="dureeCuisson"
-        [(ngModel)]="dureeCuisson"
-      />
-    </div>
-
-
-    <div class="form-group">
-      <label for="nbrPersonnes">Number of Servings:</label>
-      <input
-        type="number"
-        id="nbrPersonnes"
-        name="nbrPersonnes"
-        [(ngModel)]="nbrPersonnes"
-      />
-    </div>
-
-    <!-- Dynamically add ingredients -->
-    <div class="form-group">
-      <h5>Ingredients:</h5>
-      <div *ngFor="let ingredient of ingredients; let i = index">
-        <p>the ingredient {{ i + 1 }}</p>
-        <select
-          [(ngModel)]="ingredients[i]"
-          name="ingredients{{ i }}"
-          class="form-select"
-          aria-label="Default select example"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <option *ngFor="let ing of ingrediantss" [ngValue]="ing">
-            {{ ing.nom }}
-          </option>
-        </select>
-        <div class="two-col">
-          <input
-            type="number"
-            [(ngModel)]="quantites[i].nombre"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="nombre de quantite"
-          />
-          <input
-            type="text"
-            [(ngModel)]="quantites[i].uniteDeMesure"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="unite de mesure"
-          />
-        </div>
-
-        <button
-          type="button"
-          class="myButton removeButt"
-          (click)="removeIngredient(i)"
-        >
-          Remove
-        </button>
-      </div>
-      <button
-        type="button"
-        class="myButton addButt"
-        (click)="addIngredient()"
-        (click)="onAddButtonClick()"
+<div class="mainDiv">
+  <div class="myContainer">
+    <header class="headTitle">
+      <h1
+        style="
+          text-align: center;
+          color: white;
+          margin-top: 0px;
+          padding-top: 5px;
+          font-family: Georgia, 'Times New Roman', Times, serif;
+        "
       >
-        Add Ingredient
-      </button>
-    </div>
-
-    <!-- Dynamically add steps (etapes) -->
-    <div class="form-group">
-      <h5>Steps:</h5>
-      <div *ngFor="let etape of etapes; let i = index">
-        <p>The step: {{ i + 1 }}</p>
-        <div class="two-col">
-          <input
-            type="number"
-            [(ngModel)]="etape.ordre"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="ordre"
-          />
-          <input
-            type="number"
-            [(ngModel)]="etape.duree"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="duree"
-          />
-        </div>
-        <textarea
-          [(ngModel)]="etape.description"
-          [ngModelOptions]="{ standalone: true }"
-          placeholder="description de l'etape"
-        ></textarea>
-        <div class="media-container">
-          <input
-          type="file"
-          id="inputList"
-          (change)="onMediaFileSelectedEtape($event, i)"
-          accept="image/jpeg, image/png, image/gif"
+        <div *ngIf="id">Update recipe</div>
+        <div *ngIf="!id">Create New Recipe</div>
+      </h1>
+    </header>
+    <form (ngSubmit)="createRecette()">
+      <div class="form-group">
+        <label for="nom">Recipe Name:</label>
+        <input
+          type="text"
+          id="nom"
+          name="nom"
+          required
+          ngModel
+          [(ngModel)]="nom"
+          #nomInput="ngModel"
         />
-        <img *ngIf="etape.media" [src]="etape.media" alt="Image" class="image-preview">
-        </div>
-        <span style="color: red;">{{ errorEtape[i] }}</span>
-        <button
-          type="button"
-          class="myButton removeButt"
-          (click)="removeEtape(i)"
+        <div
+          class="alert alert-danger"
+          *ngIf="nomInput.touched && !nomInput.valid"
         >
-          Remove
-        </button>
-      </div>
-      <button
-        type="button"
-        class="myButton addButt"
-        (click)="addEtape()"
-        (click)="onAddButtonClick()"
-      >
-        Add Step
-      </button>
-    </div>
-
-    <!-- Dynamically add besoins (besoins) -->
-    <div class="form-group">
-      <h5>Besoins:</h5>
-      <div *ngFor="let besoin of besoins; let i = index">
-        <p>besoin : {{ i + 1 }}</p>
-        <div class="two-col">
-          <input
-            type="text"
-            [(ngModel)]="besoin.nom"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="nom"
-          />
-          <input
-            type="text"
-            [(ngModel)]="besoin.type"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="type"
-          />
+          Recipe name is required
         </div>
+        <div
+          *ngIf="errorMessages['nom'] && !(nomInput.touched && !nomInput.valid)"
+          class="alert alert-danger"
+        >
+          {{ errorMessages["nom"] }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
         <textarea
-          [(ngModel)]="besoin.description"
-          [ngModelOptions]="{ standalone: true }"
-          placeholder="Methode d'utilisation"
+          id="description"
+          name="description"
+          required
+          ngModel
+          [(ngModel)]="description"
+          #descInput="ngModel"
         ></textarea>
-        Add your media upload input here (e.g., file input, image uploader)
-        <button
-          type="button"
-          class="myButton removeButt"
-          (click)="removeBesoin(i)"
+        <div
+          class="alert alert-danger"
+          *ngIf="descInput.touched && !descInput.valid"
         >
-          Remove
-        </button>
-      </div>
-      <button
-        type="button"
-        class="myButton addButt"
-        (click)="addBesoin()"
-        (click)="onAddButtonClick()"
-      >
-        Add Step
-      </button>
-    </div>
-
-    <!-- Dynamically add categories -->
-    <div class="form-group">
-      <h5>Categories:</h5>
-      <div *ngFor="let cat of categories; let i = index">
-        <p>the ingredient {{ i + 1 }}</p>
-        <select
-          [(ngModel)]="categories[i]"
-          class="form-select"
-          aria-label="Default select example"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <option *ngFor="let categorie of categoriess" [ngValue]="categorie">
-            {{ categorie.nomCat }}
-          </option>
-        </select>
-        <button
-          type="button"
-          class="myButton removeButt"
-          (click)="removeCategorie(i)"
-        >
-          Remove
-        </button>
-      </div>
-      <button
-        type="button"
-        class="myButton addButt"
-        (click)="addCategorie()"
-        (click)="onAddButtonClick()"
-      >
-        Add Ingredient
-      </button>
-    </div>
-
-    <!-- Media upload -->
-  <div class="form-group">
-    <h5>Media:</h5>
-    <div class="input-container">
-      <div *ngFor="let media of medias; let i = index" >
-        <div class="media-container">
-          <input
-          type="file"
-          id="inputList"
-          (change)="onMediaFileSelected($event, i)"
-          accept="image/jpeg, image/png, image/gif"
-        />
-        <img *ngIf="media.url" [src]="media.url" alt="Image" class="image-preview">
+          Description is required
         </div>
-        <span style="color: red;">{{ errorMedia[i] }}</span>
-        <button
-          type="button"
-          class="myButton removeButt"
-          (click)="removeMedia(i)"
+        <div
+          *ngIf="
+            errorMessages['description'] &&
+            !(descInput.touched && !descInput.valid)
+          "
+          class="alert alert-danger"
         >
-          Remove
-        </button>
+          {{ errorMessages["description"] }}
+        </div>
       </div>
-    </div>
-    <button
-      type="button"
-      class="myButton addButt"
-      (click)="addMedia()"
-    >
-      Add Media
-    </button>
-  </div>
 
-    <div class="form-group">
-      <h5>Mot cles</h5>
-      <div class="input-container">
-        <div *ngFor="let mot of motCles; let i = index">
+      <div class="form-group">
+        <label for="origine">Origin:</label>
+        <input
+          type="text"
+          id="origine"
+          name="origine"
+          required
+          ngModel
+          [(ngModel)]="origine"
+          #origineInput="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="origineInput.touched && !origineInput.valid"
+        >
+          Origine is required
+        </div>
+        <div
+          *ngIf="
+            errorMessages['origine'] &&
+            !(origineInput.touched && !origineInput.valid)
+          "
+          class="alert alert-danger"
+        >
+          {{ errorMessages["origine"] }}
+        </div>
+      </div>
+
+      <div class="form-group" style="display: flex">
+        <input
+          type="number"
+          id="dureePreparation"
+          name="dureePreparation"
+          class="threeDiv"
+          required
+          min="0"
+          ngModel
+          placeholder="Preparation Time (min):"
+          [(ngModel)]="dureePreparation"
+          #durPrepaInput="ngModel"
+        />
+        <!-- <div
+          class="alert alert-danger"
+          *ngIf="durPrepaInput.touched && !durPrepaInput.valid"
+        >
+          ?
+        </div> -->
+        <input
+          type="number"
+          id="dureeCuisson"
+          name="dureeCuisson"
+          class="threeDiv"
+          required
+          min="0"
+          ngModel
+          placeholder="Cooking Time (min)"
+          [(ngModel)]="dureeCuisson"
+          #durCuisInput="ngModel"
+        />
+        <!-- <div
+          class="alert alert-danger"
+          *ngIf="durCuisInput.touched && !durCuisInput.valid"
+        >
+          Cooking time is required
+        </div> -->
+        <input
+          type="number"
+          id="nbrPersonnes"
+          name="nbrPersonnes"
+          class="threeDiv"
+          required
+          min="1"
+          ngModel
+          placeholder="Number of Servings"
+          [(ngModel)]="nbrPersonnes"
+          #nbrPersonneInput="ngModel"
+        />
+        <!-- <div
+          class="alert alert-danger"
+          *ngIf="nbrPersonneInput.touched && !nbrPersonneInput.valid"
+        >
+          Number of personne is invalid
+        </div> -->
+      </div>
+      <div
+        *ngIf="
+          errorMessages['dureePreparation'] ||
+          errorMessages['dureeCuisson'] ||
+          errorMessages['nbrPersonnes']
+        "
+        class="alert alert-danger"
+      >
+        <div>{{ errorMessages["dureePreparation"] }}</div>
+        <div>{{ errorMessages["dureeCuisson"] }}</div>
+        <div>{{ errorMessages["nbrPersonnes"] }}</div>
+      </div>
+
+      <!-- Dynamically add ingredients -->
+      <div class="form-group myForm-groupe">
+        <div
+          class="child-form"
+          *ngFor="let ingredient of ingredients; let i = index"
+        >
+          <strong>Ingredient {{ i + 1 }}</strong>
+          <!-- <select
+            [(ngModel)]="ingredients[i]"
+            name="ingredients{{ i }}"
+            class="custom-select"
+            aria-label="Default select example"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option *ngFor="let ing of ingrediantss" [ngValue]="ing">
+              {{ ing.nom }}
+            </option>
+          </select> -->
+
           <input
             type="text"
-            id="inputList"
+            id="inputLis"
             list="options"
-            [(ngModel)]="motCles[i].mot"
-            [ngModelOptions]="{ standalone: true }"
+            required
+            [(ngModel)]="ingredients[i].nom"
+            name="ingredient{{ i }}"
+            #ingredientInput="ngModel"
+            (input)="handleInputIng(i)"
           />
           <datalist id="options">
-            <option *ngFor="let motCle of motCless" [ngValue]="motCle.mot">
-              {{ motCle.mot }}
+            <option *ngFor="let ing of ingrediantss" [value]="ing.nom">
+              {{ ing.nom }}
             </option>
           </datalist>
+          <div
+            class="alert alert-danger"
+            *ngIf="ingredientInput.touched && !ingredientInput.valid"
+          >
+            Ingredient is required
+          </div>
+
+          <div class="two-col">
+            <input
+              type="number"
+              style="background-color: white"
+              [(ngModel)]="quantites[i].nombre"
+              required
+              name="quantiteNombre{{ i }}"
+              #quantiteInputNombre="ngModel"
+              placeholder="nombre de quantite"
+            />
+            <input
+              type="text"
+              [(ngModel)]="quantites[i].uniteDeMesure"
+              required
+              name="quantiteUnite{{ i }}"
+              #quantiteInputUnite="ngModel"
+              placeholder="unite de mesure"
+            />
+          </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              (quantiteInputNombre.touched && !quantiteInputNombre.valid) ||
+              (quantiteInputUnite.touched && !quantiteInputUnite.valid)
+            "
+          >
+            <div
+              *ngIf="quantiteInputNombre.touched && !quantiteInputNombre.valid"
+            >
+              Nombre is required
+            </div>
+            <div
+              *ngIf="quantiteInputUnite.touched && !quantiteInputUnite.valid"
+            >
+              Unite is required
+            </div>
+          </div>
+
           <button
             type="button"
             class="myButton removeButt"
-            (click)="removeMotCle(i)"
+            (click)="removeIngredient(i)"
           >
             Remove
           </button>
         </div>
+        <button
+          type="button"
+          class="myButton addButt"
+          (click)="addIngredient()"
+          (click)="onAddButtonClick()"
+        >
+          Add Ingredient
+        </button>
+        <div
+          *ngIf="errorMessages['quantites'] || errorMessages['ingredients']"
+          class="alert alert-danger"
+          style="margin-top: 10px"
+        >
+          <div>{{ errorMessages["ingredients"] }}</div>
+          <div>{{ errorMessages["quantites"] }}</div>
+        </div>
       </div>
-      <button
-        type="button"
-        class="myButton addButt"
-        (click)="addMotCle()"
-        (click)="onAddButtonClick()"
-      >
-        Add Mot cle
-      </button>
-    </div>
 
-    <br />
-    <hr />
-    <br />
-    <div class="form-group bossDiv">
-      <button type="submit" class="btn bossBtn">Create Recipe</button>
-      <button type="button" class="btn bossBtn" (click)="cancel()">
-        Cancel
-      </button>
-    </div>
-  </form>
+      <!-- Dynamically add steps (etapes) -->
+      <div class="form-group myForm-groupe">
+        <div class="child-form" *ngFor="let etape of etapes; let i = index">
+          <strong>Step {{ i + 1 }}</strong>
+
+          <div class="two-col">
+            <textarea
+              [(ngModel)]="etape.description"
+              name="etapeDesc{{ i }}"
+              required
+              maxlength="250"
+              #etapeDesc="ngModel"
+              placeholder="description de l'etape"
+            ></textarea>
+
+            <span class="dragBox">
+              <input
+                [(ngModel)]="etape.media"
+                type="file"
+                id="inputList"
+                (change)="onMediaFileSelectedEtape($event, i)"
+                accept="image/jpeg, image/png, image/gif"
+              />
+              {{ messageEtape[i] }}
+              <img
+                *ngIf="etape.media"
+                [src]="etape.media"
+                alt="Image"
+                class="image-preview"
+              />
+            </span>
+          </div>
+
+          <input
+            type="number"
+            [(ngModel)]="etape.duree"
+            name="etapeDuree{{ i }}"
+            required
+            min="0"
+            #etapeDuree="ngModel"
+            placeholder="duree en minutes"
+          />
+
+          <div
+            *ngIf="
+              (etapeDesc.invalid && etapeDesc.touched) ||
+              (etapeDuree.invalid && etapeDuree.touched) ||
+              errorEtape[i]
+            "
+            class="alert alert-danger"
+          >
+            <div>{{ errorEtape[i] }}</div>
+            <div *ngIf="etapeDesc.invalid && etapeDesc.touched">
+              Description is required
+            </div>
+            <div *ngIf="etapeDuree.invalid && etapeDuree.touched">
+              Duree is required
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="myButton removeButt"
+            (click)="removeEtape(i)"
+          >
+            Remove
+          </button>
+        </div>
+        <button
+          type="button"
+          class="myButton addButt"
+          (click)="addEtape()"
+          (click)="onAddButtonClick()"
+        >
+          Add Step
+        </button>
+        <div
+          *ngIf="errorMessages['etapes']"
+          class="alert alert-danger"
+          style="margin-top: 10px"
+        >
+          <div>{{ errorMessages["etapes"] }}</div>
+        </div>
+      </div>
+
+      <!-- Dynamically add categories -->
+      <div class="form-group myForm-groupe">
+        <div class="child-form" *ngFor="let cat of categories; let i = index">
+          <p>Categorie {{ i + 1 }}</p>
+          <select
+            [(ngModel)]="categories[i]"
+            class="form-select"
+            aria-label="Default select example"
+            name="categorie"
+            required
+            #categoriSelect="ngModel"
+          >
+            <option [ngValue]="categories[i]">
+              {{ categories[i].nomCat }}
+            </option>
+            <option *ngFor="let categorie of categoriess" [ngValue]="categorie">
+              {{ categorie.nomCat }}
+            </option>
+          </select>
+          <div
+            class="alert alert-danger"
+            *ngIf="categoriSelect.invalid && categoriSelect.touched"
+          >
+            Categorie is required
+          </div>
+          <button
+            type="button"
+            class="myButton removeButt"
+            (click)="removeCategorie(i)"
+          >
+            Remove
+          </button>
+        </div>
+        <button
+          type="button"
+          class="myButton addButt"
+          (click)="addCategorie()"
+          (click)="onAddButtonClick()"
+        >
+          Add Categorie
+        </button>
+        <div
+          *ngIf="errorMessages['categories']"
+          class="alert alert-danger"
+          style="margin-top: 10px"
+        >
+          <div>{{ errorMessages["categories"] }}</div>
+        </div>
+      </div>
+
+      <!-- Media upload -->
+      <div class="form-group myForm-groupe">
+        <div class="media-container-row">
+          <ng-container
+            class="child-form"
+            *ngFor="let media of medias; let i = index"
+          >
+            <div class="media-container">
+              <span class="dragBox">
+                <input
+                  type="file"
+                  id="inputList"
+                  (change)="onMediaFileSelected($event, i)"
+                  accept="image/jpeg, image/png, image/gif"
+                  name="media"
+                  required
+                  [ngModel]="media.url"
+                  #mediaInput="ngModel"
+                />
+
+                {{ messageMedia[i] }}
+                <img
+                  *ngIf="media.url"
+                  [src]="media.url"
+                  alt="Image"
+                  class="image-preview"
+                />
+              </span>
+              <div
+                class="alert alert-danger"
+                *ngIf="
+                  (!mediaInput.valid && mediaInput.touched) || errorMedia[i]
+                "
+              >
+                <div>{{ errorMedia[i] }}</div>
+                <div *ngIf="!mediaInput.valid && mediaInput.touched">
+                  Media for recipe is required
+                </div>
+              </div>
+              <span style="color: red"> </span>
+              <button
+                type="button"
+                class="myButton removeButt"
+                (click)="removeMedia(i)"
+              >
+                Remove
+              </button>
+            </div>
+          </ng-container>
+        </div>
+
+        <button type="button" class="myButton addButt" (click)="addMedia()">
+          Add Media
+        </button>
+        <div
+          *ngIf="errorMessages['medias']"
+          class="alert alert-danger"
+          style="margin-top: 10px"
+        >
+          <div>{{ errorMessages["medias"] }}</div>
+        </div>
+      </div>
+
+      <div class="form-group myForm-groupe">
+        <div class="input-container">
+          <div class="child-form" *ngFor="let mot of motCles; let i = index">
+            <!-- <input
+              type="text"
+              id="inputLis"
+              list="options"
+              [(ngModel)]="motCles[i].mot"
+              [ngModelOptions]="{ standalone: true }"
+              (input)="handleInput(i)"
+            />
+            <datalist id="optionss">
+              <option *ngFor="let mc of motCless" [value]="mc.mot"></option>
+            </datalist> -->
+            <select
+              [(ngModel)]="motCles[i]"
+              class="form-select"
+              aria-label="Default select example"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option [ngValue]="motCles[i]">
+                {{ motCles[i].mot }}
+              </option>
+              <option *ngFor="let motCle of motCless" [ngValue]="motCle">
+                {{ motCle.mot }}
+              </option>
+            </select>
+            <button
+              type="button"
+              class="myButton removeButt"
+              (click)="removeMotCle(i)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        <button type="button" class="myButton addButt" (click)="addMotCle()">
+          Add Tags
+        </button>
+      </div>
+
+      <br />
+      <hr />
+      <br />
+      <div class="form-group bossDiv">
+        <button type="submit" class="btn bossBtn">
+          <div *ngIf="id">Update recipe</div>
+          <div *ngIf="!id">Create Recipe</div>
+        </button>
+        <button type="button" class="btn bossBtn" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

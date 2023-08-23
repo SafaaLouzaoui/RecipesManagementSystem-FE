@@ -1,30 +1,18 @@
 import { MotCleService } from './../services/mot-cle.service';
-import { Besoin } from './../models/besoin';
 import { MotCle } from './../models/mot-cle';
 import { Categorie } from './../models/categorie';
 import { Quantite } from './../models/quantite';
 import { Ingredient } from './../models/ingredient';
 import { Personne } from './../models/personne';
-import { booleanAttribute, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Media } from './../models/media';
+import { Etape } from './../models/etape';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette';
 import { CategorieService } from '../services/categorie.service';
 import { IngredientService } from '../services/ingredient.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-interface Media {
-  url?: string; // This will be the URL or Base64 Data URI of the image
-  file?: File; // We'll store the actual file here
-}
-interface Etape {
-  description?: string;
-  duree?: number;
-  ordre?: number;
-  recetteId?: number;
-  media?: string;
-  file?: File;
-}
 
 @Component({
   selector: 'app-add-recette',
@@ -32,19 +20,21 @@ interface Etape {
   styleUrls: ['./add-recette.component.css'],
 })
 export class AddRecetteComponent implements OnInit {
-  myForm: FormGroup;
+  myForm!: FormGroup;
   // Properties to hold form data
-  nom: string = '';
-  description: string = '';
-  origine: string = '';
-  dureePreparation: number = 0;
-  dureeCuisson: number = 0;
-  nbrPersonnes: number = 1;
-  utilisateurCreateur: Personne = { id: 19 };
+  recette: any; // Define the recette object to hold the updated values
+  id!: number;
+
+  nom?: string = '';
+  description?: string = '';
+  origine?: string = '';
+  dureePreparation?: number;
+  dureeCuisson?: number;
+  nbrPersonnes?: number;
+  utilisateurCreateur?: Personne = { id: 9 };
   quantites: Quantite[] = [];
   ingredients: Ingredient[] = [];
   categories: Categorie[] = [];
-  besoins: Besoin[] = [];
   motCles: MotCle[] = [];
   etapes: Etape[] = [];
   medias: Media[] = [];
@@ -58,29 +48,73 @@ export class AddRecetteComponent implements OnInit {
   errorQuantiteIngredient: string = '';
   errorMedia: string[] = [];
 
+  messageMedia: string[] = [];
+  messageEtape: string[] = [];
 
+  errorMessages: { [key: string]: string } = {
+    nom: '',
+    description: '',
+    origine: '',
+    dureePreparation: '',
+    dureeCuisson: '',
+    nbrPersonnes: '',
+    utilisateurCreateur: '',
+    ingredients: '',
+    quantites: '',
+    etapes: '',
+    medias: '',
+  };
 
   constructor(
     private recetteService: RecetteService,
     private router: Router,
+    private route: ActivatedRoute,
     private ingredient: IngredientService,
     private categorie: CategorieService,
     private motCle: MotCleService,
     private formBuilder: FormBuilder
-  ) {
-    this.myForm = this.formBuilder.group({
-      nom: ['', Validators.required], // Apply required validator to ensure the field is not empty
-      description: ['', Validators.required],
-      dureePreparation: [0, Validators.required], // Apply min validator to ensure the number is non-negative
-      nbrPersonnes: [1, Validators.min(1)], // Apply min validator to ensure the number is at least 1
-      medias: this.formBuilder.array([])
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id != undefined)
+      this.getRecette();
     this.getCategories();
     this.getIngredient();
     this.getMotCles();
+
+    this.myForm = this.formBuilder.group({
+      nom: ['', Validators.required], // Apply required validator to ensure the field is not empty
+      // description: ['', Validators.required],
+      // dureePreparation: [0, Validators.required], // Apply min validator to ensure the number is non-negative
+      // nbrPersonnes: [1, Validators.min(1)], // Apply min validator to ensure the number is at least 1
+      // medias: this.formBuilder.array([]),
+    });
+  }
+  getRecette(): void {
+    if (this.id != undefined) {
+      this.recetteService.getRecetteById(this.id).subscribe(
+        (data) => {
+          this.recette = data;
+          this.nom = this.recette.nom;
+          this.description = this.recette.description;
+          this.origine = this.recette.origine;
+          this.dureeCuisson = this.recette.dureeCuisson;
+          this.dureePreparation = this.recette.dureePreparation;
+          this.nbrPersonnes = this.recette.nbrPersonnes;
+          this.utilisateurCreateur = this.recette.utilisateurCreateur;
+          this.quantites = this.recette.quantites || [];
+          this.ingredients = this.recette.ingredients || [];
+          this.categories = this.recette.categories || [];
+          this.motCles = this.recette.motCles || [];
+          this.etapes = this.recette.etapes || [];
+          this.medias = this.recette.medias || [];
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
   // show Categories
   getCategories() {
@@ -125,7 +159,6 @@ export class AddRecetteComponent implements OnInit {
       (element) => element !== undefined
     );
     this.quantites = this.quantites.filter((element) => element !== undefined);
-    this.besoins = this.besoins.filter((element) => element !== undefined);
     this.etapes = this.etapes.filter((element) => element !== undefined);
     const formData = new FormData();
     this.medias.forEach((media) => {
@@ -136,8 +169,92 @@ export class AddRecetteComponent implements OnInit {
 
     let valid: boolean = true;
 
+    // Validate attributes
+    if (!this.nom) {
+      this.errorMessages['nom'] = 'Recipe name is required.';
+      valid = false;
+    } else this.clearErrorMessages(0);
+    if (!this.description) {
+      this.errorMessages['description'] = 'Description is required.';
+      valid = false;
+    } else this.clearErrorMessages(1);
+    if (!this.origine) {
+      this.errorMessages['origine'] = 'Origin is required.';
+      valid = false;
+    } else this.clearErrorMessages(2);
+    if (this.dureePreparation === undefined) {
+      this.errorMessages['dureePreparation'] =
+        'Preparation duration is required.';
+      valid = false;
+    } else this.clearErrorMessages(3);
+    if (this.dureeCuisson === undefined) {
+      this.errorMessages['dureeCuisson'] = 'Cooking duration is required.';
+      valid = false;
+    } else this.clearErrorMessages(4);
+    if (this.nbrPersonnes === undefined) {
+      this.errorMessages['nbrPersonnes'] = 'Number of persons is required.';
+      valid = false;
+    } else this.clearErrorMessages(5);
+    if (this.ingredients.length === 0) {
+      this.errorMessages['ingredients'] =
+        'At least one ingrediant is required.';
+      valid = false;
+    } else this.clearErrorMessages(6);
+    if (this.quantites.length === 0) {
+      this.errorMessages['quantites'] = 'At least one quantity is required.';
+      valid = false;
+    } else this.clearErrorMessages(7);
+    for (let ing of this.ingredients) {
+      if (ing.nom === undefined) {
+        this.errorMessages['ingredients'] = "Ingredients can't be empty.";
+        valid = false;
+        break;
+      } else this.clearErrorMessages(6);
+    }
+    for (let quan of this.quantites) {
+      if (quan.nombre === undefined || quan.uniteDeMesure === undefined) {
+        this.errorMessages['quantites'] = 'Qantity is invalid.';
+        valid = false;
+        break;
+      } else this.clearErrorMessages(7);
+    }
+    if (this.etapes.length === 0) {
+      this.errorMessages['etapes'] = 'At least one step is required.';
+      valid = false;
+    } else this.clearErrorMessages(8);
+    for (let etape of this.etapes) {
+      if (etape.description === undefined || etape.duree === undefined) {
+        this.errorMessages['etapes'] = 'Steps are invalid.';
+        valid = false;
+        break;
+      } else this.clearErrorMessages(8);
+    }
+    if (this.medias.length === 0) {
+      this.errorMessages['medias'] = 'At least one media is required.';
+      valid = false;
+    } else this.clearErrorMessages(9);
+    for (let med of this.medias) {
+      if (med.url === undefined) {
+        this.errorMessages['medias'] = "Medias can't be empty.";
+        valid = false;
+        break;
+      } else this.clearErrorMessages(9);
+    }
+    if (this.categories.length === 0) {
+      this.errorMessages['categories'] = 'At least one categorie is required.';
+      valid = false;
+    } else this.clearErrorMessages(10);
+    for (let cat of this.categories) {
+      if (cat.nomCat === undefined) {
+        this.errorMessages['categories'] = "Categories can't be empty.";
+        valid = false;
+        break;
+      } else this.clearErrorMessages(10);
+    }
+    console.log(this.errorMessages);
+
     if (valid) {
-      const newRecetteData: Recette = {
+      let newRecetteData: Recette = {
         nom: this.nom,
         description: this.description,
         origine: this.origine,
@@ -148,25 +265,80 @@ export class AddRecetteComponent implements OnInit {
         quantites: this.quantites,
         ingredients: this.ingredients,
         categories: this.categories,
-        besoins: this.besoins,
         motCles: this.motCles,
         etapes: this.etapes,
         medias: this.medias,
       };
+      if (this.id === undefined) {
+        this.recetteService.createRecette(newRecetteData).subscribe(
+          (response) => {
+            console.log('New recette created successfully!', response);
+            alert('New recette created successfully!' + response);
+            this.router.navigate(['recettes']);
+            // Handle success, e.g., show a success message or navigate to another page
+          },
+          (error) => {
+            console.error('Error creating recette:', error);
+            alert('Error creating recette:' + error);
+            // Handle error, e.g., show an error message
+          }
+        );
 
-      this.recetteService.createRecette(newRecetteData).subscribe(
-        (response) => {
-          console.log('New recette created successfully!', response);
-          alert('New recette created successfully!' + response);
-          this.router.navigate(['recettes'])
-          // Handle success, e.g., show a success message or navigate to another page
-        },
-        (error) => {
-          console.error('Error creating recette:', error);
-          alert('Error creating recette:' + error);
-          // Handle error, e.g., show an error message
-        }
-      );
+        //else here we're talking about updating the recette
+      } else {
+        newRecetteData.id = this.id;
+
+        this.recetteService.updateRecette(this.id, newRecetteData).subscribe(
+          () => {
+            console.log('Recette updated successfully.');
+            console.log(newRecetteData);
+            alert('Recette updated successfully');
+            this.router.navigate(['recettes']);
+          },
+          (error) => {
+            console.log(error);
+            alert('Error updating recette');
+          }
+        );
+      }
+    }
+  }
+
+  clearErrorMessages(index: number): void {
+    switch (index) {
+      case 0:
+        this.errorMessages['nom'] = '';
+        break;
+      case 1:
+        this.errorMessages['origine'] = '';
+        break;
+      case 2:
+        this.errorMessages['description'] = '';
+        break;
+      case 3:
+        this.errorMessages['dureePreparation'] = '';
+        break;
+      case 4:
+        this.errorMessages['dureeCuisson'] = '';
+        break;
+      case 5:
+        this.errorMessages['nbrPersonnes'] = '';
+        break;
+      case 6:
+        this.errorMessages['ingredients'] = '';
+        break;
+      case 7:
+        this.errorMessages['quantites'] = '';
+        break;
+      case 8:
+        this.errorMessages['etapes'] = '';
+        break;
+      case 9:
+        this.errorMessages['medias'] = '';
+        break;
+      case 10:
+        this.errorMessages['categories'] = '';
+        break;
     }
   }
 
@@ -181,6 +353,21 @@ export class AddRecetteComponent implements OnInit {
   removeIngredient(index: number): void {
     this.ingredients.splice(index, 1);
     this.quantites.splice(index, 1);
+  }
+  handleInputIng(index: number) {
+    const IngredientInput = this.ingredients[index].nom;
+    const matchedIngredient = this.ingrediantss.find(
+      (ing: { nom: string | undefined }) => ing.nom === IngredientInput
+    );
+
+    if (matchedIngredient) {
+      this.ingredients[index] = matchedIngredient;
+    }
+  }
+  getSuggestedIngredients(input: any): Ingredient[] {
+    return this.ingrediantss.filter((ing: { nom: string }) =>
+      ing.nom.toLowerCase().includes(input.toLowerCase())
+    );
   }
 
   addCategorie(): void {
@@ -208,16 +395,20 @@ export class AddRecetteComponent implements OnInit {
 
         if (base64Url.length > maxTextSize) {
           // Display a message to the user about the size limit
-          this.errorEtape[index] = 'Image URL size exceeds the maximum allowed limit for TEXT type.'
+          this.errorEtape[index] = 'Image size is too big.';
+          this.messageEtape[index] = '';
           return;
         } else {
           this.errorEtape[index] = '';
+          this.messageEtape[index] = '';
         }
 
         // If the URL is within the limit, store the URL and file in the media object
-        this.medias[index] = {
-          url: base64Url,
+        this.etapes[index] = {
+          media: base64Url,
           file: file,
+          description : this.etapes[index].description,
+          duree : this.etapes[index].duree
         };
       };
     }
@@ -226,49 +417,36 @@ export class AddRecetteComponent implements OnInit {
   addEtape(): void {
     const newStep: Etape = {};
     this.etapes.push(newStep);
+    this.messageEtape.push('Upload image (Optional)');
   }
 
   removeEtape(index: number): void {
     this.etapes.splice(index, 1);
     this.errorEtape.splice(index, 1);
-  }
-
-  addBesoin(): void {
-    const newNeed: Besoin = {};
-    this.besoins.push(newNeed);
-  }
-
-  removeBesoin(index: number): void {
-    this.besoins.splice(index, 1);
+    this.messageEtape.splice(index, 1);
   }
 
   addMotCle(): void {
     const newMotCle: MotCle = new MotCle();
     this.motCles.push(newMotCle);
+    console.log(this.motCles);
   }
 
   removeMotCle(index: number): void {
     this.motCles.splice(index, 1);
   }
+  //handleInput method to ensure if the input was selected from the datalist or was entered by the user
+  handleInput(index: number) {
+    const motCleInput = this.motCles[index].mot;
+    const matchedMotCle = this.motCless.find(
+      (mc: { mot: string | undefined }) => mc.mot === motCleInput
+    );
 
-  // onMediaFileSelected(event: Event, index: number): void {
-  //   const inputElement = event.target as HTMLInputElement;
-  //   if (inputElement.files && inputElement.files.length > 0) {
-  //     const file = inputElement.files[0];
-  //     const reader = new FileReader();
+    if (matchedMotCle) {
+      this.motCles[index] = matchedMotCle;
+    }
+  }
 
-  //     // Read the file as a Data URL (Base64)
-  //     reader.readAsDataURL(file);
-
-  //     // Once the file is read, store the URL and file in the media object
-  //     reader.onload = () => {
-  //       this.medias[index] = {
-  //         url: reader.result as string,
-  //         file: file,
-  //       };
-  //     };
-  //   }
-  // }
   onMediaFileSelected(event: Event, index: number): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
@@ -285,10 +463,12 @@ export class AddRecetteComponent implements OnInit {
 
         if (base64Url.length > maxTextSize) {
           // Display a message to the user about the size limit
-          this.errorMedia[index] = 'Image URL size exceeds the maximum allowed limit for TEXT type.'
+          this.errorMedia[index] = 'Image is too big.';
+          this.messageMedia[index] = '';
           return;
         } else {
           this.errorMedia[index] = '';
+          this.messageMedia[index] = '';
         }
 
         // If the URL is within the limit, store the URL and file in the media object
@@ -303,12 +483,13 @@ export class AddRecetteComponent implements OnInit {
   addMedia(): void {
     const newMedia: Media = {};
     this.medias.push(newMedia);
-    console.log(this.medias);
+    this.messageMedia.push('Upload Image');
   }
 
   removeMedia(index: number): void {
     this.medias.splice(index, 1);
     this.errorMedia.splice(index, 1);
+    this.messageMedia.splice(index, 1);
   }
 
   cancel(): void {
