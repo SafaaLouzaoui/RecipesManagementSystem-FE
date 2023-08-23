@@ -13,6 +13,8 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
 import { UpdateRecetteComponent } from './update-recette/update-recette.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: 'recette/:id', component: ViewRecetteComponent},
@@ -30,7 +32,9 @@ const routes: Routes = [
   {path:'ingredients/add',component:AddIngredientComponent},
   {path:'ingredients/update/:id',component:AddIngredientComponent},
   {path:'ingredients',component:ListIngredientComponent},
-  {path:'recettes_add',component:AddRecetteComponent}
+  {path:'recettes_add',component:AddRecetteComponent},
+  {path:'profile',component:ProfileComponent},
+  {path:'user_profile',component:UserProfileComponent}
 
 ];
 

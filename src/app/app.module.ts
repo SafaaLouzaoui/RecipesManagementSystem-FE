@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgImageSliderModule } from 'ng-image-slider';
+import {ReactiveFormsModule} from '@angular/forms';
+
 
 
 
@@ -28,6 +30,8 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
 import { UpdateRecetteComponent } from './update-recette/update-recette.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,9 @@ import { UpdateRecetteComponent } from './update-recette/update-recette.componen
     AddIngredientComponent,
     ListIngredientComponent,
     UpdateRecetteComponent,
-    AddRecetteComponent
+    AddRecetteComponent,
+    ProfileComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,8 @@ import { UpdateRecetteComponent } from './update-recette/update-recette.componen
     HttpClientModule,
     BrowserAnimationsModule,
     NgSelectModule,
-    NgImageSliderModule
+    NgImageSliderModule,
+    ReactiveFormsModule
 
   ],
   providers: [],

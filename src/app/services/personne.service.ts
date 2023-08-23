@@ -66,7 +66,7 @@ export class PersonneService {
     return this.http.post<Personne>(this.url6 + id, personne1);
   }
 
-  public LoginUser(personne?: Personne): Observable<Object> {
+  public LoginUser(personne: Personne): Observable<Object> {
     return this.http.post(this.url7, personne);
   }
   public Abonner(

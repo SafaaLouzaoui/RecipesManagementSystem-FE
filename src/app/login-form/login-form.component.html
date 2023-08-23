@@ -8,16 +8,16 @@
     </div>
 
     <div class="right">
-      <form (ngSubmit)="Login(user)">
+      <form  [formGroup]="Login" (ngSubmit)="ProceedLogin()">
       <h2 class="h2 section-title"><span class="span">Login</span></h2>
       <p>
         Don't have an account? <a [routerLink]="['/signup']">Creat Your Account</a> it takes less
         than a minute
       </p>
       <div class="inputs">
-        <input type="text" placeholder="user name"   [(ngModel)]="user.adresseMail"/>
+        <input type="text" placeholder="user name"   formControlName="email" autocomplete="off"/>
         <br />
-        <input type="password" placeholder="password"  [(ngModel)]="user.motDePasse" />
+        <input type="password" placeholder="password"  formControlName="password" autocomplete="off"/>
       </div>
 
       <br /><br />
