@@ -12,12 +12,12 @@
           Already Have an account ?<a [routerLink]="['/login']">Sign in</a>
         </p>
         <div class="inputs">
-        <input type="text" placeholder="Name"   [(ngModel)]="nom_complet" [ngModelOptions]="{standalone: true}"/>
-        <input type="text" placeholder="Username"   [(ngModel)]="username"[ngModelOptions]="{standalone: true}"/>
-        <input type="text" placeholder="Enter your email"  [(ngModel)]="adresse_mail" [ngModelOptions]="{standalone: true}"/>
-        <input type="password" placeholder="Enter your password"  [(ngModel)]="mot_de_passe" [ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Name"   [(ngModel)]="user.nomComplet" [ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Username"   [(ngModel)]="user.user_name"[ngModelOptions]="{standalone: true}"/>
+        <input type="text" placeholder="Enter your email"  [(ngModel)]="user.adresseMail" [ngModelOptions]="{standalone: true}"/>
+        <input type="password" placeholder="Enter your password"  [(ngModel)]="user.motDePasse" [ngModelOptions]="{standalone: true}"/>
       </div>
-      <input type="submit" class="btn btn-hover" (click)="addUser()" value="Sign up ">
+      <input type="submit" class="btn btn-hover" (click)="register()" value="Sign up ">
 
       </form>
     </div>

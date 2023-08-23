@@ -55,13 +55,15 @@ export class ViewRecetteComponent {
       (data: Recette) => {
         this.recette = data;
         if (this.recette.medias) {
+          let i = 1;
           for (const media of this.recette.medias) {
             const imageObject = {
-              image: `assets/images/${media.url}`,
-              thumbImage: `assets/images/${media.url}`,
-              alt: 'Image 1',
-              title: 'Image 1',
+              image: media.url,
+              thumbImage: media.url,
+              alt: 'Image '+i,
+              title: 'Image '+i,
             };
+            i++;
             this.imgCollection.push(imageObject);
           }
         }
@@ -118,7 +120,7 @@ export class ViewRecetteComponent {
     const newComment: Commentaire = {
       message: this.comment,
       createurRecette: this.recette?.utilisateurCreateur,
-      proprietaire: { id: 19 }
+      proprietaire: { id: 9 }
     };
 
     if (this.recette?.id !== undefined) {

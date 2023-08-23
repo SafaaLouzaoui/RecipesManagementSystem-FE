@@ -1,3 +1,4 @@
+import { AuthClassGuard } from './auth-class.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ViewRecetteComponent } from './view-recette/view-recette.component';
@@ -25,16 +26,16 @@ const routes: Routes = [
   {path:'header',component:HeaderComponent},
   {path:'footer',component:FooterComponent},
   {path:'home',component:HomeComponent},
-  {path:'recettes/update/:id',component:UpdateRecetteComponent},
+  // {path:'recettes/update/:id',component:UpdateRecetteComponent},
+  {path:'recettes/update/:id',component:AddRecetteComponent, canActivate: [AuthClassGuard]},
   {path:'categories',component:ListCategorieComponent},
-  {path:'categories/add',component:AddCategorieComponent},
-  {path:'categories/update/:id',component:AddCategorieComponent},
-  {path:'ingredients/add',component:AddIngredientComponent},
-  {path:'ingredients/update/:id',component:AddIngredientComponent},
+  {path:'categories/add',component:AddCategorieComponent, canActivate: [AuthClassGuard]},
+  {path:'categories/update/:id',component:AddCategorieComponent, canActivate: [AuthClassGuard]},
+  {path:'ingredients/add',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
+  {path:'ingredients/update/:id',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
   {path:'ingredients',component:ListIngredientComponent},
-  {path:'recettes_add',component:AddRecetteComponent},
-  {path:'profile',component:ProfileComponent},
-  {path:'user_profile',component:UserProfileComponent}
+
+  {path:'recettes_add',component:AddRecetteComponent, canActivate: [AuthClassGuard]}
 
 ];
 

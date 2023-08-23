@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -9,7 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class HeaderComponent implements OnInit {
   currentUrl= '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   viewRecettes(): void {
     this.router.navigate(['recettes']);
@@ -39,11 +40,20 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  //Flexing of the header during entering the recette page
   isAddRecettesPage() {
     return this.currentUrl === '/recettes_add';
   }
 
   isUpdateRecettePage() {
     return this.currentUrl.includes('/recettes/update/');
+  }
+
+  isAuthenticated(): boolean{
+    return this.authService.isAuthenticated();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

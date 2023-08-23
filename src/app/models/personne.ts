@@ -9,7 +9,7 @@ export class Personne {
   motDePasse?:string;
   nomComplet?:string;
   statut?:string;
-  username?:string;
+  user_name?:string;
   image?: string;
   dateCreation?:string;
   profile?:Profil;

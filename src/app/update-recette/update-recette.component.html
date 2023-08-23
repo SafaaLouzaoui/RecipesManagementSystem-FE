@@ -121,29 +121,38 @@
 
     <!-- Dynamically add steps (etapes) -->
     <div class="form-group">
-      <h5>Steps:</h5>
-      <div *ngFor="let etape of recette.etapes; let i = index">
-        <p>the step : {{ i + 1 }}</p>
+      <h5>Steps</h5>
+      <div class="secDiv" *ngFor="let etape of recette.etapes; let i = index">
+        <p>The step: {{ i + 1 }}</p>
+        <textarea
+          [(ngModel)]="etape.description"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="description de l'etape"
+        ></textarea>
         <div class="two-col">
-          <input
-            type="number"
-            [(ngModel)]="etape.ordre"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="ordre"
-          />
           <input
             type="number"
             [(ngModel)]="etape.duree"
             [ngModelOptions]="{ standalone: true }"
             placeholder="duree"
           />
+          <div class="media-container">
+            <input
+              type="file"
+              id="inputList"
+              (change)="onMediaFileUpdatedEtape($event, i)"
+              accept="image/jpeg, image/png, image/gif"
+            />
+
+            <img
+              *ngIf="etape.media"
+              [src]="etape.media"
+              alt="Image"
+              class="image-preview"
+            />
+          </div>
         </div>
-        <textarea
-          [(ngModel)]="etape.description"
-          [ngModelOptions]="{ standalone: true }"
-          placeholder="dscription de l'etape"
-        ></textarea>
-        Add your media upload input here (e.g., file input, image uploader)
+        <span style="color: red">{{ errorEtape[i] }}</span>
         <button
           type="button"
           class="myButton removeButt"
@@ -162,48 +171,7 @@
       </button>
     </div>
 
-    <!-- Dynamically add besoins (besoins) -->
-    <div class="form-group">
-      <h5>Besoins:</h5>
-      <div *ngFor="let besoin of recette.besoins; let i = index">
-        <p>besoin : {{ i + 1 }}</p>
-        <div class="two-col">
-          <input
-            type="text"
-            [(ngModel)]="besoin.nom"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="nom"
-          />
-          <input
-            type="text"
-            [(ngModel)]="besoin.type"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="type"
-          />
-        </div>
-        <textarea
-          [(ngModel)]="besoin.description"
-          [ngModelOptions]="{ standalone: true }"
-          placeholder="Methode d'utilisation"
-        ></textarea>
-        Add your media upload input here (e.g., file input, image uploader)
-        <button
-          type="button"
-          class="myButton removeButt"
-          (click)="removeBesoin(i)"
-        >
-          Remove
-        </button>
-      </div>
-      <button
-        type="button"
-        class="myButton addButt"
-        (click)="addBesoin()"
-        (click)="onAddButtonClick()"
-      >
-        Add Step
-      </button>
-    </div>
+    
 
     <!-- Dynamically add categories -->
     <div class="form-group">

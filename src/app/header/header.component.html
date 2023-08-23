@@ -1,19 +1,23 @@
 <!--
   - #HEADER
 -->
-<header class="header" [style.position]="isAddRecettesPage() || isUpdateRecettePage() ? 'static' : 'absolute'">
 
+
+<header
+  class="header"
+  [style.position]="
+    isAddRecettesPage() || isUpdateRecettePage() ? 'static' : 'absolute'
+  "
+>
   <div class="container">
-
     <h1>
       <a href="#" routerLink="/home" class="logo">Foodie<span class="span">.</span></a>
     </h1>
 
     <nav class="navbar" data-navbar>
       <ul class="navbar-list header-links">
-
         <li class="nav-item">
-          <a href="#home" class="navbar-link " data-nav-link>Home</a>
+          <a href="#home" class="navbar-link" data-nav-link>Home</a>
         </li>
 
         <li class="nav-item">
@@ -21,29 +25,56 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" routerLink="/recettes" class="navbar-link" data-nav-link>Recipes</a>
+          <a href="#" routerLink="/recettes" class="navbar-link" data-nav-link
+            >Recipes</a
+          >
         </li>
 
         <li class="nav-item">
-          <a href="#" routerLink="/recettes_add" class="navbar-link" data-nav-link>Create Recipes</a>
+          <a
+            href="#"
+            routerLink="/recettes_add"
+            class="navbar-link"
+            data-nav-link
+            >Create Recipes</a
+          >
         </li>
 
         <li class="nav-item">
-          <a href="#" routerLink="/categories" class="navbar-link" data-nav-link>Categories</a>
+          <a href="#" routerLink="/categories" class="navbar-link" data-nav-link
+            >Categories</a
+          >
         </li>
-
       </ul>
     </nav>
 
+    <!-- TODO Fix buttons not working here -->
     <div class="header-btn-group">
-      <button class="btn btn-hover login-btn" routerLink="/login">Login</button>
+      <div *ngIf="!isAuthenticated()">
+        <button class="btn btn-hover login-btn" routerLink="/login">
+          <i class="fa-solid fa-user" style="padding-inline: 5px"></i>Login
+        </button>
+      </div>
+      <div *ngIf="isAuthenticated()">
+        <button class="btn btn-hover login-btn" (click)="logout()">
+          <i
+            class="fa-solid fa-arrow-right-from-bracket"
+            style="padding-inline: 5px"
+          ></i
+          >Logout
+        </button>
+      </div>
 
-      <button class="nav-toggle-btn" aria-label="Toggle Menu" data-menu-toggle-btn (click)="addToggle()">
+      <button
+        class="nav-toggle-btn"
+        aria-label="Toggle Menu"
+        data-menu-toggle-btn
+        (click)="addToggle()"
+      >
         <span class="line top"></span>
         <span class="line middle"></span>
         <span class="line bottom"></span>
       </button>
     </div>
-
   </div>
 </header>
