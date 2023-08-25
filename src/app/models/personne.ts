@@ -12,5 +12,6 @@ export class Personne {
   user_name?:string;
   image?: string;
   dateCreation?:string;
+  role?: string;
   abonnees?:Personne[];
 }

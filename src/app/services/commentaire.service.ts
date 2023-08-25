@@ -1,5 +1,5 @@
 import { Commentaire } from './../models/commentaire';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
@@ -16,6 +16,9 @@ export class CommentaireService {
   url6 = 'http://localhost:8083/api/v1/commentaires/modifier';
   url7 = 'http://localhost:8083/api/v1/commentaires/supprimer';
 
+  private token = localStorage.getItem('access_token');
+  private headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+
   constructor(private http: HttpClient) {}
 
   public getComments(): Observable<Commentaire> {
@@ -30,11 +33,11 @@ export class CommentaireService {
     const urlWithParams = `${this.url1}?${params.toString()}`;
 
     // Make the HTTP post request with the updated URL containing both parameters
-    return this.http.post<Commentaire>(urlWithParams, commentaire);
+    return this.http.post<Commentaire>(urlWithParams, commentaire, { headers: this.headers });
   }
 
   deletComment(idComment: number): Observable<Commentaire> {
-    return this.http.delete<Commentaire>(`${this.url7}/${idComment}`);
+    return this.http.delete<Commentaire>(`${this.url7}/${idComment}`, { headers: this.headers });
   }
 
   calculateTimeDifference(created_at?: Date): string {

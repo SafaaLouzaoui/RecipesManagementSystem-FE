@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Personne } from '../models/personne';
 import { Recette } from '../models/recette';
@@ -14,6 +14,12 @@ export class PersonneService {
   url4 = 'http://localhost:8083/api/v1/utilisateurs/modifier/';
   url5 = 'http://localhost:8083/api/v1/utilisateurs/activer/';
   url6 = 'http://localhost:8083/api/v1/utilisateurs/promote/';
+
+  private token = localStorage.getItem('access_token');
+  private headers = new HttpHeaders().set(
+    'Authorization',
+    `Bearer ${this.token}`
+  );
 
 
   constructor(private http: HttpClient) {}
@@ -39,31 +45,31 @@ export class PersonneService {
   }
 
   public updateUser(id?: number, personne?: Personne): Observable<Object> {
-    return this.http.put(this.url4 + id, personne);
+    return this.http.put(this.url4 + id, personne, { headers: this.headers });
   }
 
   public getAllPersons(): Observable<Personne[]> {
-    return this.http.get<Personne[]>(this.url1);
+    return this.http.get<Personne[]>(this.url1, { headers: this.headers });
   }
 
   public bloque_compte(
     id?: number,
     personne1?: Personne
   ): Observable<Personne> {
-    return this.http.post<Personne>(this.url2 + id, personne1);
+    return this.http.post<Personne>(this.url2 + id, personne1, { headers: this.headers });
   }
 
   public activer_compte(
     id?: number,
     personne1?: Personne
   ): Observable<Personne> {
-    return this.http.post<Personne>(this.url5 + id, personne1);
+    return this.http.post<Personne>(this.url5 + id, personne1, { headers: this.headers });
   }
   public promoteUserVersModerator(
     id?: number,
     personne1?: Personne
   ): Observable<Personne> {
-    return this.http.post<Personne>(this.url6 + id, personne1);
+    return this.http.post<Personne>(this.url6 + id, personne1, { headers: this.headers });
   }
 
   // public LoginUser(personne?: Personne): Observable<Object> {
@@ -76,6 +82,6 @@ export class PersonneService {
   ): Observable<Object> {
     const url =
       'http://localhost:8083/api/v1/utilisateurs/abonner/' + id + '/' + idd;
-    return this.http.post(url, recette);
+    return this.http.post(url, recette, { headers: this.headers });
   }
 }
