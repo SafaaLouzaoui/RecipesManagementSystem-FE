@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, pipe } from 'rxjs';
 import { Categorie } from '../models/categorie';
+import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +16,10 @@ export class CategorieService {
   url5 = 'http://localhost:8083/api/v1/categories/lire';
 
   constructor(private http: HttpClient) {}
-  public getCategories(): Observable<Categorie> {
-    return this.http.get(this.url1);
+  getCategories(): Observable<any> {
+    let token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(this.url1, { headers });
   }
   public createCategorie(Categorie: Categorie): Observable<Object> {
     return this.http.post(this.url2, Categorie);
