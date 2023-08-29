@@ -37,19 +37,19 @@ export class RecetteService {
 
   createRecette(recette: Recette): Observable<Recette> {
     return this.http.post<Recette>(this.apiUrl1, recette, {
-      headers: this.headers,
+      headers: this.headers
     });
   }
 
   updateRecette(id: number, recette: Recette): Observable<Recette> {
     return this.http.put<Recette>(`${this.apiUrl3}/${id}`, recette, {
-      headers: this.headers,
+      headers: this.headers
     });
   }
 
   deleteRecette(id: number): Observable<Recette> {
     return this.http.delete<Recette>(`${this.apiUrl5}/${id}`, {
-      headers: this.headers,
+      headers: this.headers
     });
   }
 

@@ -28,6 +28,7 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
 import { UpdateRecetteComponent } from './update-recette/update-recette.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UpdateRecetteComponent } from './update-recette/update-recette.componen
     AddIngredientComponent,
     ListIngredientComponent,
     UpdateRecetteComponent,
-    AddRecetteComponent
+    AddRecetteComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

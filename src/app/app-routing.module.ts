@@ -14,6 +14,7 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
 import { UpdateRecetteComponent } from './update-recette/update-recette.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: 'recette/:id', component: ViewRecetteComponent},
@@ -24,16 +25,16 @@ const routes: Routes = [
   {path:'header',component:HeaderComponent},
   {path:'footer',component:FooterComponent},
   {path:'home',component:HomeComponent},
-  // {path:'recettes/update/:id',component:UpdateRecetteComponent},
-  {path:'recettes/update/:id',component:AddRecetteComponent, canActivate: [AuthClassGuard]},
+  {path:'recettes/update/:id',component:UpdateRecetteComponent, canActivate: [AuthClassGuard]},
   {path:'categories',component:ListCategorieComponent},
   {path:'categories/add',component:AddCategorieComponent, canActivate: [AuthClassGuard]},
   {path:'categories/update/:id',component:AddCategorieComponent, canActivate: [AuthClassGuard]},
   {path:'ingredients/add',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
   {path:'ingredients/update/:id',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
   {path:'ingredients',component:ListIngredientComponent},
-  {path:'recettes_add',component:AddRecetteComponent, canActivate: [AuthClassGuard]}
-
+  {path:'recettes_add',component:AddRecetteComponent, canActivate: [AuthClassGuard]},
+  { path: '404', component: NotFoundComponent },
+  { path: '**', redirectTo: '/404' }
 ];
 
 @NgModule({

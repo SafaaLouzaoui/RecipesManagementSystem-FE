@@ -1,3 +1,4 @@
+import { HeaderComponent } from './../header/header.component';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
@@ -14,6 +15,7 @@ import { CategorieService } from '../services/categorie.service';
 export class ListRecetteComponent implements OnInit {
   recettes: Recette[] = [];
   categories: Categorie[] = [];
+
   constructor(private recetteService: RecetteService,private route: ActivatedRoute, private router: Router,private categorieService: CategorieService) { }
 
   ngOnInit(): void {

@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { UpdateRecetteComponent } from './../update-recette/update-recette.component';
 import { CommentaireService } from './../services/commentaire.service';
 import { Commentaire } from './../models/commentaire';
@@ -29,16 +30,20 @@ export class ViewRecetteComponent {
   commentaires?: Commentaire;
   comment: string = '';
 
+  idAuth?: any;
+
   constructor(
     private route: ActivatedRoute,
     private recetteService: RecetteService,
     private router: Router,
     private http: HttpClient,
     private personneService: PersonneService,
-    private commentaireService: CommentaireService
+    private commentaireService: CommentaireService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.idAuth = localStorage.getItem('idAuth');
     this.getRecette();
     this.getCreateurRecette(this.recette.idCreateur);
     this.calculateTimedifference();
@@ -120,8 +125,9 @@ export class ViewRecetteComponent {
     const newComment: Commentaire = {
       message: this.comment,
       createurRecette: this.recette?.utilisateurCreateur,
-      proprietaire: { id: 9 }
+      proprietaire: { id: this.idAuth }
     };
+
 
     if (this.recette?.id !== undefined) {
       // Construct the HttpParams with both 'idRecette' and 'idPersonne' parameters

@@ -8,7 +8,7 @@
     <!-- Page Container -->
     <div class="w3-content w3-margin-top" style="max-width: 1400px">
       <div class="seven">
-        <h1>{{ recette.nom }}</h1>
+        <h1>recipe : {{ recette.nom }}</h1>
       </div>
 
       <!-- The Grid -->
@@ -55,42 +55,43 @@
         <div class="w3-twothird">
           <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="h2 section-title">
-              <span class="span">Ingredients</span>
+              <span class="span">Chef</span>
             </h2>
             <div class="w3-container">
-              <ul
-                class="custom-list"
-                *ngFor="let ingredient of recette.ingredients"
-                style="margin-bottom: -2%"
-              >
-                <li class="custom-item">
-                  <ion-icon name="checkmark-outline"></ion-icon>
-                  <span class="span">{{ ingredient.nom }}</span>
-                </li>
-                <hr />
-              </ul>
+
+              <h5 class="infosChef">{{ recette.utilisateurCreateur?.nomComplet }}</h5>
+
             </div>
           </div>
 
           <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="h2 section-title">
-              <span class="span">Besoins</span>
+              <span class="span">Ingredients</span>
             </h2>
             <div class="w3-container">
-              <ul
-                class="custom-list"
-                *ngFor="let besoin of recette.besoins"
-                style="margin-bottom: -2%"
-              >
-                <li class="custom-item">
+              <ul class="custom-list">
+                <li
+                  class="custom-item"
+                  *ngFor="let ingredient of recette.ingredients"
+                >
                   <ion-icon name="checkmark-outline"></ion-icon>
-                  <span class="span">{{ besoin.nom }}</span>
+                  <span class="span">{{ ingredient.nom }}</span>
+                </li>
+                <hr />
+              </ul>
+              <ul class="custom-list">
+                <li
+                  class="custom-item"
+                  *ngFor="let quantite of recette.quantites"
+                >
+                  <span class="span"
+                    >{{ quantite.nombre }} {{ quantite.uniteDeMesure }}</span
+                  >
                 </li>
                 <hr />
               </ul>
             </div>
           </div>
-
           <div class="w3-container w3-card w3-white">
             <h2 class="h2 section-title">
               <span class="span">Steps</span>
@@ -132,7 +133,6 @@
                 aria-label="Message"
                 class="input-field"
                 [(ngModel)]="comment"
-
               ></textarea>
 
               <button type="submit" class="btn">Post Comment</button>
@@ -146,17 +146,31 @@
               <div class="comment">
                 <div class="comment-avatar">
                   <!-- Replace this with the URL of the commenter's avatar image -->
-                  <img [src]="comment.proprietaire?.image || '../../assets/images/avatar-1.jpg'" alt="Default User Avatar" />
+                  <img
+                    [src]="
+                      comment.proprietaire?.image ||
+                      '../../assets/images/avatar-1.jpg'
+                    "
+                    alt="Default User Avatar"
+                  />
                   <!-- <img src="../../assets/images/avatar-1.jpg" alt=""> -->
                 </div>
                 <div class="comment-content">
-                  <p class="comment-author" style="color: black">{{ comment.proprietaire?.nomComplet }}</p>
+                  <p class="comment-author" style="color: black">
+                    {{ comment.proprietaire?.nomComplet }}
+                  </p>
                   <p class="comment-text" style="color: black">
                     {{ comment.message }}
                   </p>
                   <p class="comment-timestamp">{{ comment.created_at_diff }}</p>
                 </div>
-                <button  class="removeButt" *ngIf="comment.id !== undefined" (click)="deleteComment(comment.id)">X</button>
+                <button
+                  class="removeButt"
+                  *ngIf="comment.id !== undefined"
+                  (click)="deleteComment(comment.id)"
+                >
+                  X
+                </button>
               </div>
             </div>
           </div>

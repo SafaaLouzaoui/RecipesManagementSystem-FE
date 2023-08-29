@@ -20,7 +20,7 @@ export class AddIngredientComponent {
   constructor(private IngredientService: IngredientService,private route: ActivatedRoute, private router: Router) {}
   ngOnInit(): void {
     // Check if there's an ID in the URL to determine the mode
-   this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.isUpdateMode = !!this.id; // Convert the ID to a boolean (true if ID exists, false if not)
     console.log(this.id)
     this.getIngredient();
