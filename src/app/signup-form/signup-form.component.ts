@@ -14,8 +14,6 @@ export class SignupFormComponent implements OnInit {
   image_login: any = './assets/images/loginImage3.jpg';
   image_backgound_login: any = '../assets/images/loginImage.jpg';
   user: Personne = {};
-  imageSrc: string | undefined;
-
 
   constructor(
     private router: Router,
@@ -31,7 +29,7 @@ export class SignupFormComponent implements OnInit {
           // Successful login, now check if the user is authenticated
           if (this.authService.isAuthenticated()) {
             // Redirect the user to a protected page (e.g., dashboard)
-            this.router.navigate(['/profile',this.user.id]);
+            this.router.navigate(['/recettes']);
           } else {
             console.error('Authentication failed');
           }
@@ -44,12 +42,5 @@ export class SignupFormComponent implements OnInit {
   }
   showSuccessPopup(): void {
     alert('Sign up successful!'); // You can use a custom modal or toast message instead
-  }
-  loadFile(event: any): void {
-    const image = document.getElementById("output") as HTMLImageElement;
-    if (event.target.files && event.target.files[0]) {
-      this.imageSrc = URL.createObjectURL(event.target.files[0]);
-      image.src = this.imageSrc;
-    }
   }
 }

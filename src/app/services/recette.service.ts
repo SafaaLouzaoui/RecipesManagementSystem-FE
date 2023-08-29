@@ -16,20 +16,16 @@ export class RecetteService {
   private apiUrl5 = 'http://localhost:8083/api/v1/recettes/supprimer';
   private apiUrl5_1 = 'http://localhost:8083/api/v1/recettes/mien/supprimer';
   private apiUrl6 = 'http://localhost:8083/api/v1/quantites/lireTous';
-<<<<<<< HEAD
   private apiUrl7 = 'http://localhost:8083/api/v1/recettes/recettesByCategorie/';
   private apiUrl8 = 'http://localhost:8083/api/v1/recettes/mesRecettes';
 
-=======
-  private apiUrl7 =
-    'http://localhost:8083/api/v1/recettes/recettesByCategorie/';
+
 
   private token = localStorage.getItem('access_token');
   private headers = new HttpHeaders().set(
     'Authorization',
     `Bearer ${this.token}`
   );
->>>>>>> ef26498a914a76a4a78d0f1cfa0e20ba05ee6c42
 
   constructor(private http: HttpClient) {}
 

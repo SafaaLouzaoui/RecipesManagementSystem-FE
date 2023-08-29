@@ -6,7 +6,7 @@
     </div>
 
     <div class="right">
-      <!-- <form>
+      <form>
         <h2 class="h2 section-title"><span class="span">Sign Up</span></h2>
         <p>
           Already Have an account ?<a [routerLink]="['/login']">Sign in</a>
@@ -19,59 +19,6 @@
       </div>
       <input type="submit" class="btn btn-hover" (click)="register()" value="Sign up ">
 
-      </form> -->
-
-      <h2 class="h2 section-title"><span class="span">Sign Up</span></h2>
-      <p>
-        Already Have an account ?<a [routerLink]="['/login']">Sign in</a>
-      </p>
-      <form (submit)="register()">
-        <!-- <h4 >User information</h4> -->
-        <div class="pl-lg-4">
-          <div class="profile-pic">
-            <label class="-label" for="file">
-              <span class="glyphicon glyphicon-camera"></span>
-              <span>choose your profile picture</span>
-            </label>
-            <input id="file" type="file" (change)="loadFile($event)" name="image" [(ngModel)]="user.image"/>
-            <img src="../../assets/images/icon.jpeg" id="output" width="200" />
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-first-name">Name</label>
-                <input type="text" id="input-first-name" class="form-control form-control-alternative" name="name" [(ngModel)]="user.nomComplet"  >
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group focused">
-                <label class="form-control-label" for="input-username">Username</label>
-                <input type="text" id="input-username" class="form-control form-control-alternative"  name="username" [(ngModel)]="user.user_name">
-              </div>
-            </div>
-
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-email">Email address</label>
-                <input type="email" id="input-email" class="form-control form-control-alternative" name="email" [(ngModel)]="user.adresseMail" >
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-email">Password</label>
-                <input type="password" id="input-password" class="form-control form-control-alternative" name="password" [(ngModel)]="user.motDePasse" >
-              </div>
-            </div>
-
-</div>
-
-<div class="profile-pic">
-        <button class="btn btn-hover" type="submit" style="justify-content: center;
-        align-items: center;">Sign Up</button>
-        </div>
-        </div>
       </form>
     </div>
   </div>

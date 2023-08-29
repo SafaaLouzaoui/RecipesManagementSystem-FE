@@ -38,7 +38,7 @@ const routes: Routes = [
 
 
   {path:'recettes_add',component:AddRecetteComponent, canActivate: [AuthClassGuard]},
-  {path:'profile',component:ProfileComponent},
+  {path:'profile/:id',component:ProfileComponent},
   {path:'user_profile',component:UserProfileComponent},
 
 

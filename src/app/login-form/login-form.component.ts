@@ -27,7 +27,8 @@ export class LoginFormComponent {
           // Successful login, now check if the user is authenticated
           if (this.authService.isAuthenticated()) {
             // Redirect the user to a protected page (e.g., dashboard)
-            this.router.navigate(['/recettes']);
+            let id = Number (localStorage.getItem('idAuth'));
+            this.router.navigate(['/profile',id]);
           } else {
             console.error('Authentication failed');
           }
