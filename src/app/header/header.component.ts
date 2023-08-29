@@ -1,6 +1,8 @@
+import { PersonneService } from './../services/personne.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { Personne } from '../models/personne';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +12,17 @@ import { Router, NavigationEnd } from '@angular/router';
 export class HeaderComponent implements OnInit {
   currentUrl= '';
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private personneServ: PersonneService) { }
 
+  ngOnInit() {
+    // Subscribe to router events to track the current URL
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Update the currentUrl variable with the current URL
+        this.currentUrl = event.url;
+      }
+    });
+  }
   viewRecettes(): void {
     this.router.navigate(['recettes']);
   }
@@ -30,15 +41,7 @@ export class HeaderComponent implements OnInit {
     this.status = !this.status;
   }
 
-  ngOnInit() {
-    // Subscribe to router events to track the current URL
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Update the currentUrl variable with the current URL
-        this.currentUrl = event.url;
-      }
-    });
-  }
+
 
   //Flexing of the header during entering the recette page
   isAddRecettesPage() {
@@ -54,6 +57,15 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe(
+      (data) => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Logout error : '+error);
+      }
+    );
   }
 }

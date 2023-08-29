@@ -1,5 +1,6 @@
+import { HeaderComponent } from './../header/header.component';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router,NavigationEnd } from '@angular/router';
+import {ActivatedRoute, Router } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette';
 import { Categorie } from '../models/categorie';
@@ -14,29 +15,16 @@ import { CategorieService } from '../services/categorie.service';
 export class ListRecetteComponent implements OnInit {
   recettes: Recette[] = [];
   categories: Categorie[] = [];
-  currentUrl= '';
 
   constructor(private recetteService: RecetteService,private route: ActivatedRoute, private router: Router,private categorieService: CategorieService) { }
 
   ngOnInit(): void {
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Update the currentUrl variable with the current URL
-        this.currentUrl = event.url;
-      }
-    });
     // Check if the URL contains an 'id' parameter
-    if (this.currentUrl.includes('recettes_Category')) {
-        const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
       // If the 'id' parameter exists, display recipes by category
       this.fetchRecettesByCategory(id);
-    }
-    if(this.currentUrl.includes('recettes_User')){
-      const id = Number(this.route.snapshot.paramMap.get('id'));
-      this.fetchRecettesByUser(id);
-    }
-    else {
+    } else {
       // If the 'id' parameter does not exist, display all recipes
       this.fetchRecettes();
     }
@@ -55,17 +43,6 @@ export class ListRecetteComponent implements OnInit {
 
   fetchRecettesByCategory(categorie_id: number): void {
     this.recetteService.recettesByCategorie(categorie_id).subscribe(
-      (data: any) => {
-        this.recettes = data;
-      },
-      error => {
-        console.log('Une erreur s\'est produite lors du chargement des recettes : ', error);
-      }
-    );
-  }
-
-  fetchRecettesByUser(id: number): void {
-    this.recetteService.getMesRecette(id).subscribe(
       (data: any) => {
         this.recettes = data;
       },

@@ -10,8 +10,7 @@
           font-family: Georgia, 'Times New Roman', Times, serif;
         "
       >
-        <div *ngIf="id">Update recipe</div>
-        <div *ngIf="!id">Create New Recipe</div>
+        <div>Create New Recipe</div>
       </h1>
     </header>
     <form (ngSubmit)="createRecette()">
@@ -171,17 +170,6 @@
           *ngFor="let ingredient of ingredients; let i = index"
         >
           <strong>Ingredient {{ i + 1 }}</strong>
-          <!-- <select
-            [(ngModel)]="ingredients[i]"
-            name="ingredients{{ i }}"
-            class="custom-select"
-            aria-label="Default select example"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <option *ngFor="let ing of ingrediantss" [ngValue]="ing">
-              {{ ing.nom }}
-            </option>
-          </select> -->
 
           <input
             type="text"
@@ -287,6 +275,7 @@
             <span class="dragBox">
               <input
                 [(ngModel)]="etape.media"
+                name="etapeMedia{{ i }}"
                 type="file"
                 id="inputList"
                 (change)="onMediaFileSelectedEtape($event, i)"
@@ -366,9 +355,6 @@
             required
             #categoriSelect="ngModel"
           >
-            <option [ngValue]="categories[i]">
-              {{ categories[i].nomCat }}
-            </option>
             <option *ngFor="let categorie of categoriess" [ngValue]="categorie">
               {{ categorie.nomCat }}
             </option>
@@ -470,26 +456,12 @@
       <div class="form-group myForm-groupe">
         <div class="input-container">
           <div class="child-form" *ngFor="let mot of motCles; let i = index">
-            <!-- <input
-              type="text"
-              id="inputLis"
-              list="options"
-              [(ngModel)]="motCles[i].mot"
-              [ngModelOptions]="{ standalone: true }"
-              (input)="handleInput(i)"
-            />
-            <datalist id="optionss">
-              <option *ngFor="let mc of motCless" [value]="mc.mot"></option>
-            </datalist> -->
             <select
               [(ngModel)]="motCles[i]"
               class="form-select"
               aria-label="Default select example"
               [ngModelOptions]="{ standalone: true }"
             >
-              <option [ngValue]="motCles[i]">
-                {{ motCles[i].mot }}
-              </option>
               <option *ngFor="let motCle of motCless" [ngValue]="motCle">
                 {{ motCle.mot }}
               </option>
@@ -513,8 +485,7 @@
       <br />
       <div class="form-group bossDiv">
         <button type="submit" class="btn bossBtn">
-          <div *ngIf="id">Update recipe</div>
-          <div *ngIf="!id">Create Recipe</div>
+          <div>Create Recipe</div>
         </button>
         <button type="button" class="btn bossBtn" (click)="cancel()">
           Cancel

@@ -1,5 +1,6 @@
+import { PersonneService } from './personne.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -10,6 +11,11 @@ import { Personne } from '../models/personne';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8083';
+  private token = localStorage.getItem('access_token');
+  private headers = new HttpHeaders().set(
+    'Authorization',
+    `Bearer ${this.token}`
+  );
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -26,6 +32,7 @@ export class AuthService {
           // Store the access token and refresh token in localStorage
           localStorage.setItem('access_token', tokenData.access_token);
           localStorage.setItem('refresh_token', tokenData.refresh_token);
+          localStorage.setItem('idAuth', tokenData.id);
 
         }),
         catchError(err => {
@@ -48,6 +55,7 @@ export class AuthService {
           // Store the access token and refresh token in localStorage
           localStorage.setItem('access_token', tokenData.access_token);
           localStorage.setItem('refresh_token', tokenData.refresh_token);
+          localStorage.setItem('idAuth', tokenData.id);
 
         }),
         catchError(err => {
@@ -57,25 +65,21 @@ export class AuthService {
       );
   }
 
+
+
   logout(): Observable<any> {
-    const refreshToken = localStorage.getItem('refresh_token');
-    if (refreshToken) {
-      return this.refreshToken().pipe(
-        tap(() => {
-          // Clear tokens from localStorage
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          this.router.navigate(['/login']);
-        }),
-        catchError(err => {
-          console.error('Logout failed', err);
-          return err; // Return the error for further handling if needed
-        })
-      );
-    } else {
-      return of(null);
-    }
+    return this.http.post(`${this.baseUrl}/api/v1/auth/logout`, {
+      headers: this.headers,
+    });
   }
+
+  // logout() {
+  //   localStorage.removeItem('access_token');
+  //   localStorage.removeItem('refresh_token');
+  //   this.router.navigate(['/login']);
+  // }
+
+
 
 
   refreshToken(): Observable<any> {

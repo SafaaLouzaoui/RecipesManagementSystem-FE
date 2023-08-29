@@ -1,3 +1,5 @@
+import { AuthService } from './../services/auth.service';
+import { HeaderComponent } from './../header/header.component';
 import { MotCleService } from './../services/mot-cle.service';
 import { MotCle } from './../models/mot-cle';
 import { Categorie } from './../models/categorie';
@@ -7,7 +9,7 @@ import { Personne } from './../models/personne';
 import { Media } from './../models/media';
 import { Etape } from './../models/etape';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette';
 import { CategorieService } from '../services/categorie.service';
@@ -22,8 +24,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddRecetteComponent implements OnInit {
   myForm!: FormGroup;
   // Properties to hold form data
-  recette: any; // Define the recette object to hold the updated values
-  id!: number;
+  idAuth?: any;
 
   nom?: string = '';
   description?: string = '';
@@ -31,7 +32,7 @@ export class AddRecetteComponent implements OnInit {
   dureePreparation?: number;
   dureeCuisson?: number;
   nbrPersonnes?: number;
-  utilisateurCreateur?: Personne = { id: 9 };
+  utilisateurCreateur?: Personne = {};
   quantites: Quantite[] = [];
   ingredients: Ingredient[] = [];
   categories: Categorie[] = [];
@@ -65,6 +66,7 @@ export class AddRecetteComponent implements OnInit {
     medias: '',
   };
 
+
   constructor(
     private recetteService: RecetteService,
     private router: Router,
@@ -72,13 +74,12 @@ export class AddRecetteComponent implements OnInit {
     private ingredient: IngredientService,
     private categorie: CategorieService,
     private motCle: MotCleService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.id != undefined)
-      this.getRecette();
+    this.idAuth = localStorage.getItem('idAuth');
     this.getCategories();
     this.getIngredient();
     this.getMotCles();
@@ -90,31 +91,6 @@ export class AddRecetteComponent implements OnInit {
       // nbrPersonnes: [1, Validators.min(1)], // Apply min validator to ensure the number is at least 1
       // medias: this.formBuilder.array([]),
     });
-  }
-  getRecette(): void {
-    if (this.id != undefined) {
-      this.recetteService.getRecetteById(this.id).subscribe(
-        (data) => {
-          this.recette = data;
-          this.nom = this.recette.nom;
-          this.description = this.recette.description;
-          this.origine = this.recette.origine;
-          this.dureeCuisson = this.recette.dureeCuisson;
-          this.dureePreparation = this.recette.dureePreparation;
-          this.nbrPersonnes = this.recette.nbrPersonnes;
-          this.utilisateurCreateur = this.recette.utilisateurCreateur;
-          this.quantites = this.recette.quantites || [];
-          this.ingredients = this.recette.ingredients || [];
-          this.categories = this.recette.categories || [];
-          this.motCles = this.recette.motCles || [];
-          this.etapes = this.recette.etapes || [];
-          this.medias = this.recette.medias || [];
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
   }
   // show Categories
   getCategories() {
@@ -261,7 +237,7 @@ export class AddRecetteComponent implements OnInit {
         dureePreparation: this.dureePreparation,
         dureeCuisson: this.dureeCuisson,
         nbrPersonnes: this.nbrPersonnes,
-        utilisateurCreateur: this.utilisateurCreateur,
+        utilisateurCreateur: {id : this.idAuth},
         quantites: this.quantites,
         ingredients: this.ingredients,
         categories: this.categories,
@@ -269,38 +245,24 @@ export class AddRecetteComponent implements OnInit {
         etapes: this.etapes,
         medias: this.medias,
       };
-      if (this.id === undefined) {
-        this.recetteService.createRecette(newRecetteData).subscribe(
-          (response) => {
-            console.log('New recette created successfully!', response);
-            alert('New recette created successfully!' + response);
-            this.router.navigate(['recettes']);
-            // Handle success, e.g., show a success message or navigate to another page
-          },
-          (error) => {
-            console.error('Error creating recette:', error);
-            alert('Error creating recette:' + error);
-            // Handle error, e.g., show an error message
-          }
-        );
 
-        //else here we're talking about updating the recette
-      } else {
-        newRecetteData.id = this.id;
+      this.recetteService.createRecette(newRecetteData).subscribe(
+        (response) => {
+          console.log('New recette created successfully!', response);
+          alert('New recette created successfully!' + response);
+          this.router.navigate(['recettes']);
+          // Handle success, e.g., show a success message or navigate to another page
+        },
+        (error) => {
+          console.error('Error creating recette:', error);
+          alert('Error creating recette:' + error);
+          // Handle error, e.g., show an error message
+        }
+      );
 
-        this.recetteService.updateRecette(this.id, newRecetteData).subscribe(
-          () => {
-            console.log('Recette updated successfully.');
-            console.log(newRecetteData);
-            alert('Recette updated successfully');
-            this.router.navigate(['recettes']);
-          },
-          (error) => {
-            console.log(error);
-            alert('Error updating recette');
-          }
-        );
-      }
+      //else here we're talking about updating the recette
+    } else {
+      alert('ERROR IN ADDING');
     }
   }
 
@@ -407,8 +369,8 @@ export class AddRecetteComponent implements OnInit {
         this.etapes[index] = {
           media: base64Url,
           file: file,
-          description : this.etapes[index].description,
-          duree : this.etapes[index].duree
+          description: this.etapes[index].description,
+          duree: this.etapes[index].duree,
         };
       };
     }
@@ -477,6 +439,13 @@ export class AddRecetteComponent implements OnInit {
           file: file,
         };
       };
+    }
+  }
+
+  extractFileName(event: any, index: number): void {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      this.medias[index].url = files[0].name;
     }
   }
 

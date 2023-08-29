@@ -12,13 +12,12 @@ export class Personne {
   user_name?:string;
   image?: string;
   dateCreation?:string;
-  profile?:Profil;
+  role?: string;
   abonnees?:Personne[];
   mesRecettes?:Recette[];
   recettesApprouvees?:Recette[];
   images?:Media[];
   commentaires?:Commentaire[];
   remarques?:Commentaire[];
-  role?:string;
 
 }

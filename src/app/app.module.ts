@@ -33,6 +33,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
     AddRecetteComponent,
     ProfileComponent,
     UserProfileComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

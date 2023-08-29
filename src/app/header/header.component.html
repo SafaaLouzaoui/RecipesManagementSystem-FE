@@ -45,25 +45,24 @@
             >Categories</a
           >
         </li>
+        <li class="nav-item">
+          <a href="#" routerLink="/ingredients" class="navbar-link" data-nav-link
+            >Ingredients</a
+          >
+        </li>
       </ul>
     </nav>
 
-    <!-- TODO Fix buttons not working here -->
+    <!-- TODO Fix button logout not working here -->
     <div class="header-btn-group">
-      <div *ngIf="!isAuthenticated()">
-        <button class="btn btn-hover login-btn" routerLink="/login">
-          <i class="fa-solid fa-user" style="padding-inline: 5px"></i>Login
-        </button>
-      </div>
-      <div *ngIf="isAuthenticated()">
-        <button class="btn btn-hover login-btn" (click)="logout()">
-          <i
-            class="fa-solid fa-arrow-right-from-bracket"
-            style="padding-inline: 5px"
-          ></i
-          >Logout
-        </button>
-      </div>
+      <button class="btn btn-hover login-btn" *ngIf="!isAuthenticated()" routerLink="/login">
+        <i class="fa-solid fa-user" style="padding-inline: 5px"></i>Login
+      </button>
+
+      <button class="btn btn-hover login-btn" *ngIf="isAuthenticated()" (click)="logout()">
+        <i class="fa-solid fa-arrow-right-from-bracket" style="padding-inline: 5px"></i>Logout
+      </button>
+
 
       <button
         class="nav-toggle-btn"
