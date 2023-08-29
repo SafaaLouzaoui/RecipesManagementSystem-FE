@@ -1,19 +1,30 @@
-
-
+<head>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
 <body>
  <!-- for header part -->
  <header>
 
   <div class="logosec">
-    <a href="#" routerLink="/home" class="logo">Foodie<span class="span">.</span></a>
-    <img src=
+    <div class="container">
+      <h1>
+        <a href="#" routerLink="/home" class="logo">Foodie.</a>
+      </h1>
+      </div>
+      <div id="menu" class="icn menuicn"
+      id="menuicn"
+      alt="menu-icon">
+        <input type="checkbox" id="menu-toggle"/>
+        <ul></ul>
+      </div>
+      <!-- <img src=
 "https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
           class="icn menuicn"
           id="menuicn"
-          alt="menu-icon">
+          alt="menu-icon"> -->
   </div>
 
-  <div class="searchbar">
+  <!-- <div class="searchbar">
       <input type="text"
              placeholder="Search">
       <div class="searchbtn">
@@ -22,17 +33,35 @@
               class="icn srchicn"
               alt="search-icon">
         </div>
-  </div>
+  </div> -->
 
   <div class="message">
+    <div  class="notification-container"  [ngClass]="{'open': isOpen}">
+      <div mat-icon-button (click)="toggleDropdown()" >
       <div class="circle"></div>
       <img src=
-"https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png"
+"assets/images/bell.png"
            class="icn"
            alt="">
+           </div>
+           <div class="notification-list">
+            <div *ngFor="let comment of mesComments" class="notification-item">
+              {{ comment.message }}
+            </div>
+          </div>
+          </div>
+          <!-- <div class="notification-container" [ngClass]="{'open': isOpen}">
+            <button mat-icon-button (click)="toggleDropdown()">
+              notifications
+            </button>
+            <div class="notification-list">
+              <div *ngFor="let notification of notifications" class="notification-item">
+                {{ notification.message }}
+              </div>
+            </div>
+          </div> -->
       <div class="dp">
-        <img src=
-"https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+        <img src="'../../assets/images/{{personne.image}}"
               class="dpicn"
               alt="dp">
         </div>
@@ -51,8 +80,7 @@
 							alt="dashboard">
 						<h3> Dashboard</h3>
 					</div> -->
-
-					<div class="nav-option" (click)="toggleRecipe()" (click)="selectOption(1)" [ngStyle]="{ 'border-left': selectedOption === 1 ? '5px solid var(--dark-orange)' : 'none',
+					<div class="nav-option" (click)="fetchRecettesByUser()" (click)="toggleRecipe()" (click)="selectOption(1)" [ngStyle]="{ 'border-left': selectedOption === 1 ? '5px solid var(--dark-orange)' : 'none',
           'background-color': selectedOption === 1 ? 'var(--Border-color)' : 'transparent',
           'color': selectedOption === 1 ? 'rgb(0, 0, 0)' : 'inherit' }">
 						<img src=
@@ -71,18 +99,18 @@
 							alt="report">
 						<h5> Create recipes </h5>
 					</div>
-
-					<div class="nav-option option4" (click)="selectOption(4)" [ngStyle]="{ 'border-left': selectedOption === 4 ? '5px solid var(--dark-orange)' : 'none',
+          <div *ngIf="personne.role==='USER'">
+					<div class="nav-option option4" (click)="toggleShowUsers()" (click)="selectOption(4)" [ngStyle]="{ 'border-left': selectedOption === 4 ? '5px solid var(--dark-orange)' : 'none',
           'background-color': selectedOption === 4 ? 'var(--Border-color)' : 'transparent',
           'color': selectedOption === 4 ? 'rgb(0, 0, 0)' : 'inherit' }">
 						<img src=
-"https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png"
+"../../assets/images/group.png"
 							class="nav-img"
 							alt="institution">
-						<h5> Institution</h5>
+						<h5> Users </h5>
 					</div>
-
-					<div class="nav-option option5" (click)="selectOption(5)" [ngStyle]="{ 'border-left': selectedOption === 5 ? '5px solid var(--dark-orange)' : 'none',
+</div>
+					<div class="nav-option option5" (click)="toggleShowInfoUsers()" (click)="selectOption(5)" [ngStyle]="{ 'border-left': selectedOption === 5 ? '5px solid var(--dark-orange)' : 'none',
           'background-color': selectedOption === 5 ? 'var(--Border-color)' : 'transparent',
           'color': selectedOption === 5 ? 'rgb(0, 0, 0)' : 'inherit' }">
 						<img src=
@@ -92,7 +120,30 @@
 						<h5> Profile</h5>
 					</div>
 
-					<div class="nav-option option6" (click)="toggleProfile()" (click)="selectOption(6)" [ngStyle]="{ 'border-left': selectedOption === 6 ? '5px solid var(--dark-orange)' : 'none',
+          <div *ngIf="personne.role==='USER'">
+
+          <div class="nav-option option8" (click)=" toggleshowCategories()" (click)="selectOption(8)" [ngStyle]="{ 'border-left': selectedOption === 8 ? '5px solid var(--dark-orange)' : 'none',
+          'background-color': selectedOption === 8 ? 'var(--Border-color)' : 'transparent',
+          'color': selectedOption === 7 ? 'rgb(0, 0, 0)' : 'inherit'}">
+						<img src=
+"../../assets/images/category.png"
+							class="nav-img"
+							alt="logout">
+						<h5>Categories</h5>
+					</div>
+          </div>
+          <div *ngIf="personne.role==='USER'">
+          <div class="nav-option option9" (click)="toggleshowIngredients()" (click)="selectOption(9)" [ngStyle]="{ 'border-left': selectedOption === 9 ? '5px solid var(--dark-orange)' : 'none',
+          'background-color': selectedOption === 9 ? 'var(--Border-color)' : 'transparent',
+          'color': selectedOption === 7 ? 'rgb(0, 0, 0)' : 'inherit'}">
+						<img src=
+"../../assets/images/harvest.png"
+							class="nav-img"
+							alt="logout">
+						<h5>Ingredients</h5>
+					</div>
+          </div>
+          <div class="nav-option option6" (click)="toggleProfile()" (click)="selectOption(6)" [ngStyle]="{ 'border-left': selectedOption === 6 ? '5px solid var(--dark-orange)' : 'none',
           'background-color': selectedOption === 6 ? 'var(--Border-color)' : 'transparent',
           'color': selectedOption === 6 ? 'rgb(0, 0, 0)' : 'inherit' }">
 						<img src=
@@ -101,8 +152,7 @@
 							alt="settings">
 						<h5> Settings</h5>
 					</div>
-
-					<div class="nav-option option7" (click)="selectOption(7)" [ngStyle]="{ 'border-left': selectedOption === 7 ? '5px solid var(--dark-orange)' : 'none',
+          <div class="nav-option option7" (click)="selectOption(7)" [ngStyle]="{ 'border-left': selectedOption === 7 ? '5px solid var(--dark-orange)' : 'none',
           'background-color': selectedOption === 7 ? 'var(--Border-color)' : 'transparent',
           'color': selectedOption === 7 ? 'rgb(0, 0, 0)' : 'inherit'}">
 						<img src=
@@ -184,91 +234,162 @@
         <div *ngIf="showProfile; else recipeOrAdd">
           <app-user-profile></app-user-profile>
         </div>
-
         <ng-template #recipeOrAdd>
           <div *ngIf="showRecipe; else addRecipeSection">
-          </div>
+            <section class="section food-menu" id="food-menu">
+              <div class="container">
+                <h2 class="h2 section-title">
+                  My <span class="span">Recipes</span>
+                </h2>
+                <ul class="food-menu-list" >
 
+                  <li *ngFor="let recette of recettes">
+                    <div class="food-menu-card">
+
+                      <div class="card-banner">
+                        <ng-container *ngIf="recette.medias && recette.medias.length > 0">
+                        <img src="{{recette.medias[0].url}}" width="300" height="300" loading="lazy"
+                          alt="Fried Chicken Unlimited" class="w-100">
+                          </ng-container>
+
+                        <!-- <div class="badge">-15%</div> -->
+
+                        <button class="btn food-menu-btn" (click)="viewRecette(recette.id)">View details</button>
+                      </div>
+
+                      <div class="wrapper">
+                        <p class="category">{{recette.utilisateurCreateur?.user_name}}</p>
+
+                        <div class="rating-wrapper">
+                          <button  class="button-10" *ngIf="recette.id !== undefined" (click)="deleteRecette(recette.id)">Delete</button>
+                          <button  class="button-10" *ngIf="recette.id !== undefined" (click)="updateRecette(recette.id)">Update</button>
+
+                        </div>
+                      </div>
+
+                      <h3 class="h3 card-title">{{ recette.nom }}</h3>
+
+                      <div class="price-wrapper">
+
+                        <p class="price-text">Durée Préparation:</p>
+
+                        <data class="price">{{recette.dureePreparation}}</data>
+
+                      </div>
+
+                    </div>
+                  </li>
+
+
+                </ul>
+
+
+              </div>
+            </section>
+
+
+
+
+          </div>
           <ng-template #addRecipeSection>
-            <div *ngIf="showAddRecipe">
+            <div *ngIf="showAddRecipe; else ShowUsers">
               <app-add-recette></app-add-recette>
             </div>
+            <ng-template #ShowUsers>
+              <div *ngIf="ShowAllUsers; else ShowInfo">
+                <div class="report-body">
+                  <div class="report-topic-heading">
+                    <h3 class="t-op">Article</h3>
+                    <h3 class="t-op">Views</h3>
+                    <h3 class="t-op">Comments</h3>
+                    <h3 class="t-op">Status</h3>
+                  </div>
+
+                  <div class="items">
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 73</h3>
+                      <h3 class="t-op-nextlvl">2.9k</h3>
+                      <h3 class="t-op-nextlvl">210</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 72</h3>
+                      <h3 class="t-op-nextlvl">1.5k</h3>
+                      <h3 class="t-op-nextlvl">360</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 71</h3>
+                      <h3 class="t-op-nextlvl">1.1k</h3>
+                      <h3 class="t-op-nextlvl">150</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 70</h3>
+                      <h3 class="t-op-nextlvl">1.2k</h3>
+                      <h3 class="t-op-nextlvl">420</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 69</h3>
+                      <h3 class="t-op-nextlvl">2.6k</h3>
+                      <h3 class="t-op-nextlvl">190</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 68</h3>
+                      <h3 class="t-op-nextlvl">1.9k</h3>
+                      <h3 class="t-op-nextlvl">390</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 67</h3>
+                      <h3 class="t-op-nextlvl">1.2k</h3>
+                      <h3 class="t-op-nextlvl">580</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 66</h3>
+                      <h3 class="t-op-nextlvl">3.6k</h3>
+                      <h3 class="t-op-nextlvl">160</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                    <div class="item1">
+                      <h3 class="t-op-nextlvl">Article 65</h3>
+                      <h3 class="t-op-nextlvl">1.3k</h3>
+                      <h3 class="t-op-nextlvl">220</h3>
+                      <h3 class="t-op-nextlvl label-tag">Published</h3>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <ng-template #ShowInfo>
+                <div *ngIf="ShowInfoUser; else Showcat">
+                        <app-user-info></app-user-info>
+                  </div>
+                  <ng-template #Showcat>
+                    <div *ngIf="showCategories; else ShowIngre ">
+                      <app-list-categorie></app-list-categorie>
+                      </div>
+                      <ng-template #ShowIngre>
+                    <div *ngIf="showIngredients">
+                      <app-list-ingredient></app-list-ingredient>
+                      </div>
+                      </ng-template>
+</ng-template>
+                  </ng-template>
+            </ng-template>
           </ng-template>
         </ng-template>
-				<!-- <div class="report-body">
-					<div class="report-topic-heading">
-						<h3 class="t-op">Article</h3>
-						<h3 class="t-op">Views</h3>
-						<h3 class="t-op">Comments</h3>
-						<h3 class="t-op">Status</h3>
-					</div>
-
-					<div class="items">
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 73</h3>
-							<h3 class="t-op-nextlvl">2.9k</h3>
-							<h3 class="t-op-nextlvl">210</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 72</h3>
-							<h3 class="t-op-nextlvl">1.5k</h3>
-							<h3 class="t-op-nextlvl">360</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 71</h3>
-							<h3 class="t-op-nextlvl">1.1k</h3>
-							<h3 class="t-op-nextlvl">150</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 70</h3>
-							<h3 class="t-op-nextlvl">1.2k</h3>
-							<h3 class="t-op-nextlvl">420</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 69</h3>
-							<h3 class="t-op-nextlvl">2.6k</h3>
-							<h3 class="t-op-nextlvl">190</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 68</h3>
-							<h3 class="t-op-nextlvl">1.9k</h3>
-							<h3 class="t-op-nextlvl">390</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 67</h3>
-							<h3 class="t-op-nextlvl">1.2k</h3>
-							<h3 class="t-op-nextlvl">580</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 66</h3>
-							<h3 class="t-op-nextlvl">3.6k</h3>
-							<h3 class="t-op-nextlvl">160</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-						<div class="item1">
-							<h3 class="t-op-nextlvl">Article 65</h3>
-							<h3 class="t-op-nextlvl">1.3k</h3>
-							<h3 class="t-op-nextlvl">220</h3>
-							<h3 class="t-op-nextlvl label-tag">Published</h3>
-						</div>
-
-					</div>
-				</div> -->
 			</div>
 		</div>
 	</div>

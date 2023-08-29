@@ -339,7 +339,6 @@
   .header {
     --color: var(--white);
     --btn-color: var(--champagne-pink);
-
     position: absolute;
     top: 0;
     left: 0;

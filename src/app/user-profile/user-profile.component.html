@@ -77,42 +77,50 @@
               </div>
             </div>
             <div class="card-body-2">
-              <form>
-                <h4 >User information</h4>
+              <form (submit)="onSubmit()">
+                <!-- <h4 >User information</h4> -->
                 <div class="pl-lg-4">
+                  <div class="profile-pic">
+                    <label class="-label" for="file">
+                      <span class="glyphicon glyphicon-camera"></span>
+                      <span>Change Image</span>
+                    </label>
+                    <input id="file" type="file" (change)="loadFile($event)" name="image" [(ngModel)]="personne.image">/>
+                    <img src="'../../assets/images/{{personne.image}}" id="output" width="200" />
+                  </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username">Username</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" name="username" [(ngModel)]="personne.user_name">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+                        <input type="email" id="input-email" class="form-control form-control-alternative" name="email" [(ngModel)]="personne.adresseMail" placeholder="jesse@example.com">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
+                        <label class="form-control-label" for="input-first-name">Name</label>
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative" name="name" [(ngModel)]="personne.nomComplet" placeholder="First name" value="Lucky">
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-last-name">Last name</label>
+                        <label class="form-control-label" for="input-last-name">Profile Picture</label>
                         <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <hr class="my-4">
                 <!-- Address -->
-                <h4>Contact information</h4>
-                <div class="pl-lg-4">
+                <!-- <h4>Contact information</h4> -->
+                <!-- <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
@@ -141,18 +149,18 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <hr class="my-4">
+                </div> -->
+                <!-- <hr class="my-4"> -->
                 <!-- Description -->
-                <h4 >About me</h4>
-                <div class="pl-lg-4">
+                <!-- <h4 >About me</h4> -->
+                <!-- <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label class="form-control-label" for="input-description">About Me</label>
                     <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
                   </div>
-                </div>
+                </div> -->
                 <div class="">
-                <button class="btn btn-hover">Edit</button>
+                <button class="btn btn-hover" type="submit">Edit</button>
                 </div>
               </form>
             </div>

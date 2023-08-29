@@ -13,13 +13,13 @@ import { AddCategorieComponent } from './add-categorie/add-categorie.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
-import { UpdateRecetteComponent } from './update-recette/update-recette.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: 'recette/:id', component: ViewRecetteComponent},
-  {path: 'recettes/:id', component: ListRecetteComponent},
+  {path: 'recettes_Category/:id', component: ListRecetteComponent},
+  {path: 'recettes_User/:id', component: ListRecetteComponent},
   {path: 'recettes', component: ListRecetteComponent},
   {path:'login',component:LoginFormComponent},
   {path:'signup',component:SignupFormComponent},
@@ -35,7 +35,11 @@ const routes: Routes = [
   {path:'ingredients/update/:id',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
   {path:'ingredients',component:ListIngredientComponent},
 
-  {path:'recettes_add',component:AddRecetteComponent, canActivate: [AuthClassGuard]}
+
+  {path:'recettes_add',component:AddRecetteComponent, canActivate: [AuthClassGuard]},
+  {path:'profile',component:ProfileComponent},
+  {path:'user_profile',component:UserProfileComponent}
+
 
 ];
 

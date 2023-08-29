@@ -19,5 +19,6 @@ export class Personne {
   images?:Media[];
   commentaires?:Commentaire[];
   remarques?:Commentaire[];
+  role?:string;
 
 }
