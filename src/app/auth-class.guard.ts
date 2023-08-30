@@ -18,7 +18,6 @@ export class AuthClassGuard implements CanActivate {
     }
 
     const requiredRoles = route.data['requiredRoles'] as string[];
-    console.log(requiredRoles);
 
     if (!requiredRoles || requiredRoles.length === 0) {
       return true; // Allow access for authenticated users with no specific role requirement
@@ -27,7 +26,7 @@ export class AuthClassGuard implements CanActivate {
     if (requiredRoles && requiredRoles.some(role => this.authService.isUserInRole(role))) {
       return true;
     } else {
-      return this.router.createUrlTree(['/unauthorized']);
+      return this.router.createUrlTree(['/404']);
     }
   }
 }

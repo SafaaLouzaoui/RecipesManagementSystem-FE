@@ -27,6 +27,42 @@
               ></ng-image-slider>
             </div>
             <div class="w3-container">
+              <!-- TODO add a router link to redirect to the profile -->
+              <button
+                style="
+                  background: none;
+                  width: 100%;
+                  color: orange;
+                  border: orange;
+                  border: 1px solid orange !important;
+                  height: 60px;
+                  margin-left: auto;
+                  margin-right: auto;
+                  padding: 5px;
+                "
+              >
+                <div
+                  class="comment-avatar"
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <!-- Replace this with the URL of the commenter's avatar image -->
+                  <img
+                    [src]="
+                      recette.utilisateurCreateur?.image ||
+                      '../../assets/images/avatar-1.jpg'
+                    "
+                    alt="Default User Avatar"
+                  />
+                  <h5>
+                    {{ recette.utilisateurCreateur?.nomComplet }}
+                  </h5>
+                  <!-- <img src="../../assets/images/avatar-1.jpg" alt=""> -->
+                </div>
+              </button>
               <h3 class="h3 section-title">
                 <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i
                 >Preparation time :
@@ -58,9 +94,9 @@
               <span class="span">Chef</span>
             </h2>
             <div class="w3-container">
-
-              <h5 class="infosChef">{{ recette.utilisateurCreateur?.nomComplet }}</h5>
-
+              <h5 class="infosChef">
+                {{ recette.utilisateurCreateur?.nomComplet }}
+              </h5>
             </div>
           </div>
 

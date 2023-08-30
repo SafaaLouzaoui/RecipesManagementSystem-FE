@@ -81,7 +81,7 @@ body{
   width: 570px;
 }
 button{
-  width: 100px;
+  width: 200px;
   padding: 8px;
   font-size: 18px;
   font-weight: 700;
@@ -94,7 +94,7 @@ button{
 }
 button::after{
   content: '';
-  width: 96px;
+  width: 200px;
   height: 35px;
   border: 3px solid #fff;
   position: absolute;
