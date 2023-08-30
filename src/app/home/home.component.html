@@ -123,7 +123,7 @@
 
           </ul>
 
-          <button class="btn btn-hover">Order Now</button>
+          <!-- <button class="btn btn-hover">Order Now</button> -->
 
         </div>
 
@@ -135,7 +135,7 @@
       - #FOOD MENU
     -->
 
-    <section class="section food-menu" id="food-menu">
+    <!-- <section class="section food-menu" id="food-menu">
       <div class="container">
 
         <p class="section-subtitle">Popular Dishes</p>
@@ -412,14 +412,14 @@
 
 
       </div>
-    </section>
+    </section> -->
 
 
     <!--
       - #CTA
     -->
 
-    <section class="section section-divider white cta" style="background-image: url('assets/images/hero-bg.jpg')">
+    <!-- <section class="section section-divider white cta" style="background-image: url('assets/images/hero-bg.jpg')">
       <div class="container">
 
         <div class="cta-content">
@@ -447,13 +447,13 @@
         </figure>
 
       </div>
-    </section>
+    </section> -->
 
     <!--
       - #DELIVERY
     -->
 
-    <section class="section section-divider gray delivery">
+    <!-- <section class="section section-divider gray delivery">
       <div class="container">
 
         <div class="delivery-content">
@@ -480,7 +480,7 @@
         </figure>
 
       </div>
-    </section>
+    </section> -->
 
     <!--
       - #TESTIMONIALS
@@ -610,7 +610,7 @@
     <!--
       - #BANNER
     -->
-
+<!--
     <section class="section section-divider gray banner">
       <div class="container">
 
@@ -689,7 +689,7 @@
         </ul>
 
       </div>
-    </section>
+    </section> -->
 
     <!--
       - #BLOG
@@ -708,7 +708,7 @@
           Food is any substance consumed to provide nutritional support for an organism.
         </p>
 
-        <ul class="blog-list">
+        <ul class="blog-list" *ngFor="let recette of recettes">
 
           <li>
             <div class="blog-card">
@@ -717,7 +717,6 @@
                 <img src="assets/images/blog-1.jpg" width="600" height="390" loading="lazy"
                   alt="What Do You Think About Cheese Pizza Recipes?" class="w-100">
 
-                <div class="badge">Pizza</div>
               </div>
 
               <div class="card-content">
@@ -727,27 +726,26 @@
                   <a href="#" class="card-meta-link">
                     <ion-icon name="calendar-outline"></ion-icon>
 
-                    <time class="meta-info" datetime="2022-01-01">Jan 01 2022</time>
+                    <time class="meta-info" datetime="2022-01-01">{{recette.datePublication}}</time>
                   </a>
 
                   <a href="#" class="card-meta-link">
                     <ion-icon name="person-outline"></ion-icon>
 
-                    <p class="meta-info">Jonathan Smith</p>
+                    <p class="meta-info">{{recette.utilisateurCreateur?.nomComplet}}</p>
                   </a>
 
                 </div>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">What Do You Think About Cheese Pizza Recipes?</a>
+                  <a href="#" class="card-title">{{recette.nom}}</a>
                 </h3>
 
                 <p class="card-text">
-                  Financial experts support or help you to to find out which way you can raise your funds more...
-                </p>
+{{recette.description}}                </p>
 
-                <a href="#" class="btn-link">
-                  <span>Read More</span>
+                <a  (click)="viewRecette(recette.id)"class="btn-link">
+                  <span (click)="viewRecette(recette.id)">Read More</span>
 
                   <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
                 </a>

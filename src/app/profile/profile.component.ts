@@ -6,6 +6,8 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette';
+import { AuthService } from './../services/auth.service';
+
 
 
 
@@ -21,7 +23,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(private elementRef: ElementRef,private route: ActivatedRoute,
     private router: Router,private PersonneService:PersonneService,
-    private location: Location,private recetteService: RecetteService,private personService:PersonneService) { }
+    private location: Location,private recetteService: RecetteService,private authService: AuthService,
+    private personService:PersonneService) { }
   showProfile: boolean = false;
   showRecipe: boolean = true;
   showAddRecipe: boolean = false;
@@ -46,6 +49,7 @@ export class ProfileComponent implements OnInit {
   username: string = '';
   email: string='';
   personne:Personne={};
+  allUsers:Personne[]=[];
   id!:number;
 
   mesComments?: Commentaire[]=[];
@@ -59,9 +63,13 @@ export class ProfileComponent implements OnInit {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.fetchPersonne();
     });
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log("////////////////////////////");
+    console.log(this.id);
     this.fetchPersonne();
     this.fetchRecettesByUser();
-
+    this.listCommetaires();
+    this.fetchAllUsers();
   }
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -81,9 +89,10 @@ export class ProfileComponent implements OnInit {
 
   }
   fetchPersonne(): void {
-    this.personService.showOnePerson(25).subscribe(
+    this.personService.showOnePerson(this.id).subscribe(
       (data: any) => {
         this.personne = data;
+        console.log("///////////////////personnne////////////")
         console.log(this.personne);
     },
     error => {
@@ -92,10 +101,38 @@ export class ProfileComponent implements OnInit {
    );
   }
 
+  fetchAllUsers(): void {
+    console.log("testtesttesttettfhsdbfjk")
+        console.log(this.allUsers);
+    this.personService.getAllPersons().subscribe(
+      (data:any) => {
+        this.allUsers = data;
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  updatePersonne(): void {
+    const personne: Personne = {
+      role:this.personne.role
+    };
+    this.PersonneService.updateUser(this.personne.id,personne).subscribe(
+      () => {
+        console.log(' updated successfully.');
+
+      },
+      error => {
+        console.log(error);
+      }
+
+    );
+  }
+
   fetchRecettesByUser(): void {
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
-    const id=25;
-    this.recetteService.getMesRecette(id).subscribe(
+
+    this.recetteService.getMesRecette(this.id).subscribe(
       (data: any) => {
         this.recettes = data;
       },
@@ -113,6 +150,9 @@ export class ProfileComponent implements OnInit {
   updateRecette(id: number): void {
     this.router.navigate(['recettes/update',id]);
   }
+  comment_recette(id: number): void {
+    this.router.navigate(['recettes',id]);
+  }
   deleteRecette(id: number): void {
     if (confirm('Are you sure you want to delete this recette?')) {
       this.recetteService.deleteRecette(id).subscribe(
@@ -126,7 +166,40 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  deletePersonne(id: number,personne: Personne): void {
+    if (confirm('Are you sure you want to delete this account?')) {
+      this.personService.deleteUser(id).subscribe(
+        (response: any) => {
+          // Check if the response is a JSON object
+    if (response && response.error) {
+      console.error('Error response:', response.error);
+    } else {
+      console.log('Success:', response);
+      // Handle the success message here, like displaying a toast/notification
+    }
 
+          this.fetchAllUsers();
+
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  logout() {
+    this.authService.logout().subscribe(
+      (data) => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        console.error('Logout error : '+error);
+      }
+    );
+  }
 
 
   toggleProfile() {
@@ -202,7 +275,7 @@ export class ProfileComponent implements OnInit {
 
 
   listCommetaires() {
-    this.recetteService.getMesRecette(25).subscribe(
+    this.recetteService.getMesRecette(this.id).subscribe(
       (recettes: Recette[]) => {
         this.mesRecettes = recettes; // Assign the retrieved data to the property
 
@@ -220,6 +293,8 @@ export class ProfileComponent implements OnInit {
               }
             });          }
         }
+        console.log("//////////COMMENTS////////////////")
+        console.log(this.mesComments);
       },
       (error) => {
         console.error('Error fetching recettes:', error);

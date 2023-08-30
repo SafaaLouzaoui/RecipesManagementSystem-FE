@@ -51,9 +51,21 @@ export class RecetteService {
       headers: this.headers
     });
   }
+  updateMesRecette(id: number, recette: Recette): Observable<Recette> {
+    return this.http.put<Recette>(`${this.apiUrl3_1}/${id}`, recette, {
+      headers: this.headers
+    });
+  }
+
 
   deleteRecette(id: number): Observable<Recette> {
     return this.http.delete<Recette>(`${this.apiUrl5}/${id}`, {
+      headers: this.headers
+    });
+  }
+
+  deleteMesRecette(id: number): Observable<Recette> {
+    return this.http.delete<Recette>(`${this.apiUrl5_1}/${id}`, {
       headers: this.headers
     });
   }

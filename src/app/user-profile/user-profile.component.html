@@ -85,7 +85,7 @@
                       <span class="glyphicon glyphicon-camera"></span>
                       <span>Change Image</span>
                     </label>
-                    <input id="file" type="file" (change)="loadFile($event)" name="image" [(ngModel)]="personne.image">/>
+                    <input id="file" type="file" (change)="extractFileName($event)" name="image" [(ngModel)]="personne.image">/>
                     <img src="'../../assets/images/{{personne.image}}" id="output" width="200" />
                   </div>
                   <div class="row">

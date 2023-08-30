@@ -13,7 +13,9 @@ export class UserProfileComponent {
   Name: string = '';
   username: string = '';
   email: string='';
-  imageSrc: string | undefined;
+  itemImage: string='';
+  imageSrc: string='';
+
   personne:Personne={};
   id!:number;
 
@@ -28,7 +30,7 @@ export class UserProfileComponent {
   }
 
   fetchPersonne(): void {
-    this.personService.showOnePerson(25).subscribe(
+    this.personService.showOnePerson(this.id).subscribe(
       (data: any) => {
         this.personne = data;
         console.log(this.personne);
@@ -39,24 +41,41 @@ export class UserProfileComponent {
    );
   }
 
-  loadFile(event: any): void {
-    const image = document.getElementById("output") as HTMLImageElement;
-    if (event.target.files && event.target.files[0]) {
-      this.imageSrc = URL.createObjectURL(event.target.files[0]);
-      image.src = this.imageSrc;
-    }
+  refreshPage() {
+    // Reload the current page to display the updated comments
+    window.location.reload();
   }
+  // loadFile(event: any): void {
+  //   const image = document.getElementById("output") as HTMLImageElement;
+  //   if (event.target.files && event.target.files[0]) {
+  //     this.imageSrc = URL.createObjectURL(event.target.files[0]);
+  //     image.src = this.imageSrc;
+  //   }
+  // }
+
+  extractFileName(event: any): void {
+    const image = document.getElementById("output") as HTMLImageElement;
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      this.itemImage = files[0].name;
+      this.imageSrc = URL.createObjectURL(event.target.files[0]);
+      image.src = this.imageSrc;    }
+  }
+
   updateUser(): void {
     const user: Personne = {
       nomComplet: this.personne.nomComplet,
       user_name: this.personne.user_name,
       adresseMail: this.personne.adresseMail,
-      image:  this.personne.image
+      image:  this.itemImage
 
     };
-    this.personService.updateUser(25,user).subscribe(
+    this.personService.updateUser(this.id,user).subscribe(
       () => {
-        console.log('user updated successfully.');
+        console.log(user);
+        const confirmation = window.confirm('user updated successfully');
+        this.refreshPage();
+
 
       },
       error => {

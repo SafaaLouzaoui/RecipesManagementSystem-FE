@@ -1,3 +1,4 @@
+
 .header{
   background-color: brown;
 }
@@ -343,4 +344,116 @@
 .item:hover {
   color: #102770;
   background-color: #ffeba7;
+}
+
+/* /////////////////////// */
+.searchbar,
+.message,
+.logosec {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.toggle{
+  list-style-type:none;
+  padding:0 0 0 50px;
+  height:50px;
+  width:0px;
+  transition:.5s width ease;
+  background-image:url("https://i.imgur.com/3d0vJzn.png");
+  background-repeat:no-repeat;
+  background-position:0px 0px;
+  margin-top: -20%;
+}
+.notif{
+  cursor: pointer;
+}
+
+.message {
+gap: 40px;
+position: relative;
+}
+.badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+
+.dp {
+height: 40px;
+width: 40px;
+background-color: #626262;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
+.main-container {
+display: flex;
+width: 100vw;
+position: relative;
+top: 70px;
+z-index: 1;
+}
+.dpicn {
+height: 42px;
+cursor: pointer;
+}
+
+.main {
+height: calc(100vh - 70px);
+width: 100%;
+overflow-y: scroll;
+overflow-x: hidden;
+padding: 40px 30px 30px 30px;
+}
+/* notif */
+.notification-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+.notification-container.open .notification-list {
+  display: block;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.notification-item a{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.notification-item a:hover{
+  background-color: #f1f1f1
+}
+
+notification-list
+
+.notification-item:last-child {
+  border-bottom: none;
 }

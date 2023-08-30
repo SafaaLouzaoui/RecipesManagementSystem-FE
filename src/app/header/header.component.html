@@ -59,11 +59,34 @@
         <i class="fa-solid fa-user" style="padding-inline: 5px"></i>Login
       </button>
 
-      <button class="btn btn-hover login-btn" *ngIf="isAuthenticated()" (click)="logout()">
-        <i class="fa-solid fa-arrow-right-from-bracket" style="padding-inline: 5px"></i>Logout
-      </button>
 
 
+      <div class="message" *ngIf="isAuthenticated()">
+        <div class="notification-container" [ngClass]="{ open: isOpen }">
+          <div mat-icon-button (click)="toggleDropdown()">
+            <div class="dp">
+              <img
+                src="'../../assets/images/{{ personne.image }}"
+                class="dpicn"
+                alt="dp"
+              />
+            </div>
+          <div class="notification-list">
+            <div class="notification-item">
+              <a  (click)="viewProfile()">
+                View Profile
+              </a>
+              <a  *ngIf="isAuthenticated()" (click)="logout()">
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+</div>
       <button
         class="nav-toggle-btn"
         aria-label="Toggle Menu"
@@ -74,6 +97,6 @@
         <span class="line middle"></span>
         <span class="line bottom"></span>
       </button>
-    </div>
+</div>
   </div>
 </header>
