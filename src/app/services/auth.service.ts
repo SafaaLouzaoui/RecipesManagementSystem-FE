@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Personne } from '../models/personne';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8083';
@@ -16,13 +16,21 @@ export class AuthService {
     'Authorization',
     `Bearer ${this.token}`
   );
+  authUser: Personne = {};
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private personneService: PersonneService
+  ) {}
 
   login(user: Personne): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/v1/auth/authenticate`, user, { responseType: 'arraybuffer' })
+    return this.http
+      .post(`${this.baseUrl}/api/v1/auth/authenticate`, user, {
+        responseType: 'arraybuffer',
+      })
       .pipe(
-        tap(response => {
+        tap((response) => {
           // Convert the ArrayBuffer to a string
           const token = new TextDecoder().decode(response);
 
@@ -33,9 +41,8 @@ export class AuthService {
           localStorage.setItem('access_token', tokenData.access_token);
           localStorage.setItem('refresh_token', tokenData.refresh_token);
           localStorage.setItem('idAuth', tokenData.id);
-
         }),
-        catchError(err => {
+        catchError((err) => {
           console.error('Login failed', err);
           return err; // Return the error for further handling if needed
         })
@@ -43,9 +50,12 @@ export class AuthService {
   }
 
   register(user: Personne): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/v1/auth/register`, user, { responseType: 'arraybuffer' })
+    return this.http
+      .post(`${this.baseUrl}/api/v1/auth/register`, user, {
+        responseType: 'arraybuffer',
+      })
       .pipe(
-        tap(response => {
+        tap((response) => {
           // Convert the ArrayBuffer to a string
           const token = new TextDecoder().decode(response);
 
@@ -56,16 +66,13 @@ export class AuthService {
           localStorage.setItem('access_token', tokenData.access_token);
           localStorage.setItem('refresh_token', tokenData.refresh_token);
           localStorage.setItem('idAuth', tokenData.id);
-
         }),
-        catchError(err => {
+        catchError((err) => {
           console.error('Registration failed', err);
           return err; // Return the error for further handling if needed
         })
       );
   }
-
-
 
   logout(): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/v1/auth/logout`, {
@@ -79,9 +86,6 @@ export class AuthService {
   //   this.router.navigate(['/login']);
   // }
 
-
-
-
   refreshToken(): Observable<any> {
     // Implement token refresh logic using the refresh token
     // Make a request to your server's refresh token endpoint
@@ -89,17 +93,19 @@ export class AuthService {
     // You should update storeTokens() method accordingly
 
     // For example:
-    return this.http.post<any>(`${this.baseUrl}/api/v1/auth/refresh-token`, {
-      refresh_token: localStorage.getItem('refresh_token')
-    }).pipe(
-      tap(newTokens => {
-        this.storeTokens(newTokens);
-      }),
-      catchError(err => {
-        console.error('Token refresh failed', err);
-        return err; // Return the error for further handling if needed
+    return this.http
+      .post<any>(`${this.baseUrl}/api/v1/auth/refresh-token`, {
+        refresh_token: localStorage.getItem('refresh_token'),
       })
-    );
+      .pipe(
+        tap((newTokens) => {
+          this.storeTokens(newTokens);
+        }),
+        catchError((err) => {
+          console.error('Token refresh failed', err);
+          return err; // Return the error for further handling if needed
+        })
+      );
   }
 
   private storeTokens(tokens: any): void {
@@ -111,4 +117,23 @@ export class AuthService {
     const accessToken = localStorage.getItem('access_token');
     return accessToken !== null; // Return true if there's an access token
   }
+
+  getAuthenticatedUser(): Observable<Personne> {
+    const id = Number(localStorage.getItem('idAuth'));
+
+    return this.personneService.showOnePerson(id);
+  }
+
+  async isUserInRole(requiredRole: string): Promise<boolean> {
+    try {
+      const user = await this.getAuthenticatedUser().toPromise();
+      const userRole = user?.role;
+
+      return userRole === requiredRole;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
 }

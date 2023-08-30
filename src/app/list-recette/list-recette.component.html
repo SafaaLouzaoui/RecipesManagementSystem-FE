@@ -4,29 +4,47 @@
 
     <section class="section food-menu" id="food-menu">
       <div class="container">
-
-        <p class="section-subtitle">Popular Dishes</p>
-
-        <h2 class="h2 section-title">
-          Our Delicious <span class="span">Foods</span>
+        <h2 class="h2 section-title">Our Delicious <span class="span">Foods</span>
         </h2>
-
-        <p class="section-text">
-          Food is any substance consumed to provide nutritional support for an organism.
-        </p>
-
-        <ul class="fiter-list" >
+        <div>
+          <input
+            type="text"
+            (input)="filterRecipes()"
+            [(ngModel)]="selectedRecettes"
+            (ngModelChange)="filterRecipes()"
+            placeholder="Search Recipe"
+            style="
+              margin-right: auto;
+              margin-left: auto;
+              padding-inline: 115px;
+              text-align: center;
+              padding-top: 10px;
+              padding-bottom: 10px;
+              border-radius: 59px;
+              box-shadow: 1px 1px 4px 5px orange;
+              font-family: Georgia, 'Times New Roman', Times, serif;
+              width: 470px;
+              font-size: 21px;
+              margin-bottom: 50px;
+            "
+          />
+        </div>
+        <!-- <ul class="fiter-list" >
 
           <li >
             <button class="filter-btn  active" routerLink="/recettes_add">Add Recipes</button>
           </li>
 
+          <li *ngFor="let categorie of categories;">
+            <button class="filter-btn">{{categorie.nomCat}}</button>
+          </li>
+        </ul> -->
 
-        </ul>
+        
 
         <ul class="food-menu-list" >
 
-          <li *ngFor="let recette of recettes">
+          <li *ngFor="let recette of filteredRecettes">
             <div class="food-menu-card">
 
               <div class="card-banner">
@@ -43,7 +61,7 @@
               <div class="wrapper">
                 <p class="category">{{recette.utilisateurCreateur?.user_name}}</p>
 
-                <div class="rating-wrapper">
+                <div class="rating-wrapper" *ngIf="authUser.role === 'ADMIN'">
                   <button  class="button-10" *ngIf="recette.id !== undefined" (click)="deleteRecette(recette.id)">Delete</button>
                   <button  class="button-10" *ngIf="recette.id !== undefined" (click)="updateRecette(recette.id)">Update</button>
                 </div>

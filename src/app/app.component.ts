@@ -9,7 +9,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'ecommerce';
   isLoginPage: boolean = false;
-  hideHeaderUrls: string[] = ['/login', '/signup','/profile'];
+  hideHeaderUrls: string[] = ['/login', '/signup','/profile', '/404'];
 
   constructor(private router: Router) {}
 

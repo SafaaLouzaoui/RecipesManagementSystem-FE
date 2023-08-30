@@ -2,54 +2,90 @@
       - #PROMO
     -->
 
-    <section class="section section-divider white promo">
-      <div class="section-categories">
-      <h2 class="h2 section-title">
-         <span class="span">Categories</span>
-      </h2>
-    </div>
-    <div>
-      <input type="text" (input)="filterCategories()"  [(ngModel)]="selectedCategory" (ngModelChange)="filterCategories()" placeholder="Search categories" style="    margin-right: auto;
-      margin-left: auto;
-      padding-inline: 115px;
-      text-align: center;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      border-radius: 59px;
-      box-shadow: 1px 1px 4px 5px orange;
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      width: 470px;
-      font-size: 21px; "/>
-    </div>
-      <div class="dropdown" *ngIf="recommendedCategories.length > 0">
-        <ul class="dropdown-list">
-          <li class="dropdown-item" *ngFor="let categorie of recommendedCategories" (click)="selectRecommendedCategory(categorie)">
-            {{ categorie.nomCat }}
-          </li>
-        </ul>
-      </div>
-      <button class="btn btn-hover" routerLink="/categories/add"  style="margin-left: 80%; margin-bottom:2%">Add Category</button>
+<section class="section section-divider white promo">
+  <div class="section-categories">
+    <h2 class="h2 section-title">
+      <span class="span">Categories</span>
+    </h2>
+  </div>
+  <div>
+    <input
+      type="text"
+      (input)="filterCategories()"
+      [(ngModel)]="selectedCategory"
+      (ngModelChange)="filterCategories()"
+      placeholder="Search categories"
+      style="
+        margin-right: auto;
+        margin-left: auto;
+        padding-inline: 115px;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 59px;
+        box-shadow: 1px 1px 4px 5px orange;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        width: 470px;
+        font-size: 21px;
+      "
+    />
+  </div>
+  <div class="dropdown" *ngIf="recommendedCategories.length > 0">
+    <ul class="dropdown-list">
+      <li
+        class="dropdown-item"
+        *ngFor="let categorie of recommendedCategories"
+        (click)="selectRecommendedCategory(categorie)"
+      >
+        {{ categorie.nomCat }}
+      </li>
+    </ul>
+  </div>
+  <button
+    class="btn btn-hover"
+    *ngIf="authUser.role == 'ADMIN'"
+    routerLink="/categories/add"
+    style="margin-left: 80%; margin-bottom: 2%"
+  >
+    Add Category
+  </button>
 
-      <div class="container" >
-        <ul class="food-menu-list" >
-          <li class="promo-item" *ngFor="let categorie of filteredCategories">
-            <button (click)="viewRecetteBycategory(categorie.idCat)">
-            <div class="promo-card">
+  <div class="container">
+    <ul class="food-menu-list">
+      <li class="promo-item" *ngFor="let categorie of filteredCategories">
+        <button (click)="viewRecetteBycategory(categorie.idCat)">
+          <div class="promo-card">
+            <h3 class="h3 card-title">{{ categorie.nomCat }}</h3>
 
+            <p class="card-text">{{ categorie.descriptionCat }}</p>
+            <img
+              src="'../../assets/images/categories/{{ categorie.media }}"
+              width="100"
+              height="100"
+              loading="lazy"
+              style="border-radius: 50%; object-fit: cover"
+              class="w-100 card-banner"
+            />
 
-
-              <h3 class="h3 card-title">{{categorie.nomCat}}</h3>
-
-              <p class="card-text">{{categorie.descriptionCat}}</p>
-              <img src="'../../assets/images/categories/{{categorie.media}}" width="100" height="100" loading="lazy" style="border-radius: 50%; object-fit: cover;"
-                class="w-100 card-banner">
-                <button  class="button-10" *ngIf="categorie.idCat !== undefined" (click)="deleteCategorie(categorie.idCat)">Delete</button>
-                <button  class="button-10" *ngIf="categorie.idCat !== undefined" (click)="updateCategorie(categorie.idCat)">Update</button>
-            </div>
+            <button
+              class="button-10"
+              *ngIf="categorie.idCat !== undefined && authUser.role == 'ADMIN'"
+              (click)="deleteCategorie(categorie.idCat)"
+            >
+              Delete
             </button>
-          </li>
+            <button
+              class="button-10"
+              *ngIf="categorie.idCat !== undefined && authUser.role == 'ADMIN'"
+              (click)="updateCategorie(categorie.idCat)"
+            >
+              Update
+            </button>
+          </div>
+        </button>
+      </li>
 
-          <!-- <li class="promo-item">
+      <!-- <li class="promo-item">
             <div class="promo-card">
 
               <div class="card-icon">
@@ -170,7 +206,6 @@
 
             </div>
           </li> -->
-        </ul>
-
-      </div>
-    </section>
+    </ul>
+  </div>
+</section>
