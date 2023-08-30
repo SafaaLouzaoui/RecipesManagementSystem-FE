@@ -13,11 +13,21 @@ export class AuthClassGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isAuthenticated()) {
+    if (!this.authService.isAuthenticated()) {
+      return this.router.createUrlTree(['/login']);
+    }
+
+    const requiredRoles = route.data['requiredRoles'] as string[];
+    console.log(requiredRoles);
+
+    if (!requiredRoles || requiredRoles.length === 0) {
+      return true; // Allow access for authenticated users with no specific role requirement
+    }
+
+    if (requiredRoles && requiredRoles.some(role => this.authService.isUserInRole(role))) {
       return true;
     } else {
-      // Redirect to the login page if not authenticated
-      return this.router.createUrlTree(['/login']);
+      return this.router.createUrlTree(['/unauthorized']);
     }
   }
 }

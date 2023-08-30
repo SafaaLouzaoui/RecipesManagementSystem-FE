@@ -16,8 +16,10 @@ export class AuthService {
     'Authorization',
     `Bearer ${this.token}`
   );
+  authUser: Personne = {};
 
-  constructor(private http: HttpClient, private router: Router) { }
+
+  constructor(private http: HttpClient, private router: Router, private personneService: PersonneService) { }
 
   login(user: Personne): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/v1/auth/authenticate`, user, { responseType: 'arraybuffer' })
@@ -110,5 +112,31 @@ export class AuthService {
   isAuthenticated(): boolean {
     const accessToken = localStorage.getItem('access_token');
     return accessToken !== null; // Return true if there's an access token
+  }
+
+  getAuthenticatedUser() {
+    let id = Number(localStorage.getItem('idAuth'));
+    this.personneService.showOnePerson(id).subscribe(
+      (data) => {
+        this.authUser = {
+          nomComplet: data.nomComplet,
+          user_name: data.user_name,
+          adresseMail: data.adresseMail,
+          role: data.role,
+        };
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  isUserInRole(requiredRole: string): boolean {
+    // Get the user's role from your authentication data
+    this.getAuthenticatedUser();
+    const userRole = this.authUser.role; // Implement this
+
+    // Compare the user's role with the required role
+    return userRole === requiredRole;
   }
 }

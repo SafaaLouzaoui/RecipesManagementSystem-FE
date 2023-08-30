@@ -8,12 +8,34 @@
          <span class="span">Ingredients</span>
       </h2>
     </div>
+    <div>
+      <input
+        type="text"
+        (input)="filterIngredients()"
+        [(ngModel)]="selectedIngredients"
+        (ngModelChange)="filterIngredients()"
+        placeholder="Search Ingredient"
+        style="
+          margin-right: auto;
+          margin-left: auto;
+          padding-inline: 115px;
+          text-align: center;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          border-radius: 59px;
+          box-shadow: 1px 1px 4px 5px orange;
+          font-family: Georgia, 'Times New Roman', Times, serif;
+          width: 470px;
+          font-size: 21px;
+        "
+      />
+    </div>
       <!-- <input type="text" (input)="filterIngredients()"  [(ngModel)]="selectedIngredients" (ngModelChange)="filterIngredients()" placeholder="Search" /> -->
-      <button class="btn btn-hover" routerLink="/ingredients/add"  style="margin-left: 80%; margin-bottom:2%">Add Ingredient</button>
+      <button class="btn btn-hover" *ngIf="authUser.role == 'ADMIN'" routerLink="/ingredients/add"  style="margin-left: 80%; margin-bottom:2%">Add Ingredient</button>
 
       <div class="container" >
         <ul class="food-menu-list" >
-          <li class="promo-item" *ngFor="let ingredient of ingredients">
+          <li class="promo-item" *ngFor="let ingredient of filteredIngredients">
             <div class="promo-card">
 
 
@@ -23,8 +45,8 @@
               <p class="card-text">{{ingredient.description}}</p>
               <img src="'../../assets/images/ingredients/{{ingredient.media}}" width="100" height="100" loading="lazy" style="border-radius: 50%; object-fit: cover;"
                 class="w-100 card-banner">
-                <button  class="button-10" *ngIf="ingredient.id !== undefined" (click)="deleteIngredient(ingredient.id)">Delete</button>
-                <button  class="button-10" *ngIf="ingredient.id !== undefined" (click)="updateIngredient(ingredient.id)">Update</button>
+                <button  class="button-10" *ngIf="ingredient.id !== undefined && authUser.role == 'ADMIN'" (click)="deleteIngredient(ingredient.id)">Delete</button>
+                <button  class="button-10" *ngIf="ingredient.id !== undefined && authUser.role == 'ADMIN'" (click)="updateIngredient(ingredient.id)">Update</button>
             </div>
           </li>
 
