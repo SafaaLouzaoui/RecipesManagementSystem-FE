@@ -10,6 +10,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicModule } from '@ionic/angular';
@@ -28,6 +29,10 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
 import { ListIngredientComponent } from './list-ingredient/list-ingredient.component';
 import { AddRecetteComponent } from './add-recette/add-recette.component';
 import { UpdateRecetteComponent } from './update-recette/update-recette.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -47,6 +52,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ListIngredientComponent,
     UpdateRecetteComponent,
     AddRecetteComponent,
+    ProfileComponent,
+    UserProfileComponent,
+    UserInfoComponent,
     NotFoundComponent
   ],
   imports: [
@@ -58,7 +66,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     BrowserAnimationsModule,
     NgSelectModule,
     NgImageSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
   ],
   providers: [],

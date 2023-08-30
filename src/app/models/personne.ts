@@ -14,4 +14,10 @@ export class Personne {
   dateCreation?:string;
   role?: string;
   abonnees?:Personne[];
+  mesRecettes?:Recette[];
+  recettesApprouvees?:Recette[];
+  images?:Media[];
+  commentaires?:Commentaire[];
+  remarques?:Commentaire[];
+
 }

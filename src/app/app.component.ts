@@ -9,12 +9,18 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'ecommerce';
   isLoginPage: boolean = false;
-  hideHeaderUrls: string[] = ['/login', '/signup'];
+  hideHeaderUrls: string[] = ['/login', '/signup','/profile'];
+
   constructor(private router: Router) {}
+
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = this.hideHeaderUrls.includes(event.url);
+        for(let str of this.hideHeaderUrls){
+          if(this.isLoginPage = event.url.includes(str))
+            break;
+        }
+
       }
     });
   }

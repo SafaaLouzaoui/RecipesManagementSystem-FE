@@ -68,7 +68,7 @@ export class ListCategorieComponent implements OnInit {
         this.recette = data;
         console.log(data);
         // Navigate to the RecettesComponent with the selected category ID
-        this.router.navigate(['', categorie_id]);
+        this.router.navigate(['recettes_Category', categorie_id]);
       },
       error => {
         console.log('Une erreur s\'est produite lors du chargement des recettes : ', error);
@@ -76,7 +76,7 @@ export class ListCategorieComponent implements OnInit {
     );
   }
   viewRecetteBycategory(id: number | undefined): void {
-    this.router.navigate(['/recettes', id]);
+    this.router.navigate(['/recettes_Category', id]);
   }
   fetchCatgorie(): void {
     this.categorieService.getCategories().subscribe(

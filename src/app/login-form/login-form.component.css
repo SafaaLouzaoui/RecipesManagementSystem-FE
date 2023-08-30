@@ -110,17 +110,6 @@ label {
   margin-left: 30px;
 }
 
-label::before {
-  content: '\f00c';
-  position: absolute;
-  font-family: FontAwesome;
-  background: transparent;
-  border: 3px solid #70F570;
-  border-radius: 4px;
-  color: transparent;
-  left: -30px;
-  transition: all 0.2s linear;
-}
 
 label:hover::before {
   font-family: FontAwesome;
