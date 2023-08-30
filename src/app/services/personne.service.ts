@@ -14,8 +14,8 @@ export class PersonneService {
   url4 = 'http://localhost:8083/api/v1/utilisateurs/modifier/';
   url5 = 'http://localhost:8083/api/v1/utilisateurs/activer/';
   url6 = 'http://localhost:8083/api/v1/utilisateurs/promote/';
-  url7 = 'http://localhost:8083/api/v1/utilisateurs/supprimer/';
-  url8 = 'http://localhost:8083/api/v1/utilisateurs/mien/supprimer/';
+  url7 = 'http://localhost:8083/api/v1/utilisateurs/supprimer';
+  url8 = 'http://localhost:8083/api/v1/utilisateurs/mien/supprimer';
 
   private token = localStorage.getItem('access_token');
   private headers = new HttpHeaders().set(

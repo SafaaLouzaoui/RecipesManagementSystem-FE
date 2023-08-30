@@ -154,11 +154,11 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['recettes',id]);
   }
   deleteRecette(id: number): void {
-    if (confirm('Are you sure you want to delete this recette?')) {
+    if (confirm('Are you sure you want to delete this user?')) {
       this.recetteService.deleteRecette(id).subscribe(
         () => {
-          this.fetchRecettesByUser();
-        },
+          this.refreshPage();
+         },
         error => {
           console.log(error);
         }
@@ -166,19 +166,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  deletePersonne(id: number,personne: Personne): void {
-    if (confirm('Are you sure you want to delete this account?')) {
+  deletePersonne(id: number): void {
+    if (confirm('Are you sure you want to delete this recette?')) {
       this.personService.deleteUser(id).subscribe(
-        (response: any) => {
-          // Check if the response is a JSON object
-    if (response && response.error) {
-      console.error('Error response:', response.error);
-    } else {
-      console.log('Success:', response);
-      // Handle the success message here, like displaying a toast/notification
-    }
-
-          this.fetchAllUsers();
+        () => {
 
         },
         error => {
@@ -187,7 +178,6 @@ export class ProfileComponent implements OnInit {
       );
     }
   }
-
   logout() {
     this.authService.logout().subscribe(
       (data) => {
@@ -271,7 +261,10 @@ export class ProfileComponent implements OnInit {
   }
 
 
-
+  refreshPage() {
+    // Reload the current page to display the updated comments
+    window.location.reload();
+  }
 
 
   listCommetaires() {
