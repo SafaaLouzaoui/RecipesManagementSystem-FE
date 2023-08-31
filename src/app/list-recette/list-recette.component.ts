@@ -93,7 +93,7 @@ export class ListRecetteComponent implements OnInit {
   }
   deleteRecette(id: number): void {
     if (confirm('Are you sure you want to delete this recette?')) {
-      this.recetteService.deleteRecette(id).subscribe(
+      this.recetteService.deleteMesRecette(id).subscribe(
         () => {
           this.fetchRecettes();
         },

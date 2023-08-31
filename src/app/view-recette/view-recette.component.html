@@ -51,10 +51,7 @@
                 >
                   <!-- Replace this with the URL of the commenter's avatar image -->
                   <img
-                    [src]="
-                      recette.utilisateurCreateur?.image ||
-                      '../../assets/images/avatar-1.jpg'
-                    "
+                    src="'../../assets/images/{{recette.utilisateurCreateur?.image}} "
                     alt="Default User Avatar"
                   />
                   <h5>
@@ -196,11 +193,7 @@
               <div class="comment">
                 <div class="comment-avatar">
                   <!-- Replace this with the URL of the commenter's avatar image -->
-                  <img
-                    [src]="
-                      comment.proprietaire?.image ||
-                      '../../assets/images/avatar-1.jpg'
-                    "
+                  <img src="'../../assets/images/{{recette.utilisateurCreateur?.image}} "
                     alt="Default User Avatar"
                   />
                   <!-- <img src="../../assets/images/avatar-1.jpg" alt=""> -->

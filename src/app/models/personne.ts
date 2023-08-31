@@ -10,6 +10,7 @@ export class Personne {
   nomComplet?:string;
   statut?:string;
   user_name?:string;
+  username?:string;
   image?: string;
   dateCreation?:string;
   role?: string;

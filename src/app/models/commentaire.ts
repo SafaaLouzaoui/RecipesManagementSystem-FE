@@ -8,7 +8,7 @@ export class Commentaire {
     message?:string;
     note?:number;
     createurRecette?:Personne;
-    recette?: Recette;
+    recetteID?: number;
     ApprobateurRecette?:Commentaire;
     proprietaire?:Personne;
     createdAt?: Date;

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Personne } from '../models/personne';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,8 +12,12 @@ import { Personne } from '../models/personne';
 })
 export class HeaderComponent implements OnInit {
   currentUrl= '';
+  personne:Personne={};
+  isOpen: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService, private personneServ: PersonneService) { }
+
+  constructor(private router: Router, private authService: AuthService,
+    private personService:PersonneService, private personneServ: PersonneService) { }
 
   ngOnInit() {
     // Subscribe to router events to track the current URL
@@ -22,6 +27,23 @@ export class HeaderComponent implements OnInit {
         this.currentUrl = event.url;
       }
     });
+    this.fetchPersonne();
+  }
+  fetchPersonne(): void {
+    let id = Number (localStorage.getItem('idAuth'));
+    this.personService.showOnePerson(id).subscribe(
+      (data: any) => {
+        this.personne = data;
+        console.log("///////////////////personnne////////////")
+        console.log(this.personne);
+    },
+    error => {
+      console.log('Une erreur s\'est produite lors du chargement des catégories : ', error);
+    }
+   );
+  }
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
   }
   viewRecettes(): void {
     this.router.navigate(['recettes']);
@@ -40,6 +62,11 @@ export class HeaderComponent implements OnInit {
   addToggle() {
     this.status = !this.status;
   }
+  viewProfile(){
+    let id = Number (localStorage.getItem('idAuth'));
+    this.router.navigate(['profile',id])
+  }
+
 
 
 

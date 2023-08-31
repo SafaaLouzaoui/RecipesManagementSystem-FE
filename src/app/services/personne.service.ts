@@ -14,7 +14,9 @@ export class PersonneService {
   url4 = 'http://localhost:8083/api/v1/utilisateurs/modifier/';
   url5 = 'http://localhost:8083/api/v1/utilisateurs/activer/';
   url6 = 'http://localhost:8083/api/v1/utilisateurs/promote/';
-  url7 = 'http://localhost:8083/api/v1/utilisateurs/mesFollowers';
+  url9 = 'http://localhost:8083/api/v1/utilisateurs/mesFollowers';
+  url7 = 'http://localhost:8083/api/v1/utilisateurs/supprimer';
+  url8 = 'http://localhost:8083/api/v1/utilisateurs/mien/supprimer';
 
   private token = localStorage.getItem('access_token');
   private headers = new HttpHeaders().set(
@@ -53,6 +55,16 @@ export class PersonneService {
     return this.http.get<Personne[]>(this.url1, { headers: this.headers });
   }
 
+  deleteUser(id: number): Observable<Personne> {
+    return this.http.delete<Personne>(`${this.url7}/${id}`, {
+      headers: this.headers
+    });
+  }
+  deleteMyAccount(id: number): Observable<Personne> {
+    return this.http.delete<Personne>(`${this.url8}/${id}`, {
+      headers: this.headers
+    });
+  }
   public bloque_compte(
     id?: number,
     personne1?: Personne
@@ -89,7 +101,7 @@ export class PersonneService {
 
   public mesFollowers(id: number): Observable<Personne[]> {
     // Append the id parameter to the URL
-    const urlWithId = `${this.url7}/${id}`;
+    const urlWithId = `${this.url9}/${id}`;
     return this.http.get<Personne[]>(urlWithId, { headers: this.headers });
   }
 }
