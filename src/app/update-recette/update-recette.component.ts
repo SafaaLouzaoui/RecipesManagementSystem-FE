@@ -217,7 +217,7 @@ export class UpdateRecetteComponent implements OnInit {
 
     if (valid) {
       this.recetteService
-        .updateRecette(this.recette.id, this.recette)
+        .updateMesRecette(this.recette.id, this.recette)
         .subscribe(
           () => {
             console.log('Recette updated successfully.');

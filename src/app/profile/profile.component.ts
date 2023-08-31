@@ -102,7 +102,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchAllUsers(): void {
-    console.log("testtesttesttettfhsdbfjk")
+    console.log("///////////USERS//////////////////")
         console.log(this.allUsers);
     this.personService.getAllPersons().subscribe(
       (data:any) => {
@@ -153,9 +153,9 @@ export class ProfileComponent implements OnInit {
   comment_recette(id: number): void {
     this.router.navigate(['recettes',id]);
   }
-  deleteRecette(id: number): void {
+  deleteMesRecette(id: number): void {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.recetteService.deleteRecette(id).subscribe(
+      this.recetteService.deleteMesRecette(id).subscribe(
         () => {
           this.refreshPage();
          },
@@ -280,13 +280,9 @@ export class ProfileComponent implements OnInit {
           const comments = recette.commentaires?.filter(comment => comment.id !== undefined && !displayedCommentIds.has(comment.id));
           if (comments) {
             this.mesComments?.push(...comments);
-            comments.forEach(comment => {
-              if (comment.id !== undefined) {
-                displayedCommentIds.add(comment.id);
-              }
-            });          }
+                     }
         }
-        console.log("//////////COMMENTS////////////////")
+        console.log("//////////RECETTEID////////////////")
         console.log(this.mesComments);
       },
       (error) => {

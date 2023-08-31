@@ -44,7 +44,7 @@
         <div class="notification-list">
           <div *ngFor="let comment of mesComments" class="notification-item">
 <p>
-              <span style="color: black;">{{comment.proprietaire?.nomComplet}} recipe: {{comment?.recetteID}}</span>
+              <span style="color: black;">"{{comment.proprietaire?.nomComplet}}" commented :  {{comment.message}}</span>
             </p>
           </div>
         </div>
@@ -293,7 +293,7 @@
                           <button
                             class="button-10"
                             *ngIf="recette.id !== undefined"
-                            (click)="deleteRecette(recette.id)"
+                            (click)="deleteMesRecette(recette.id)"
                           >
                             Delete
                           </button>
@@ -400,8 +400,8 @@
                           <td>
                             <button
                               class="button-10"
-                              *ngIf="personne.id !== undefined"
-                              (click)="deletePersonne(personne.id)"
+                              *ngIf="user.id !== undefined"
+                              (click)="deletePersonne(user.id)"
                             >
                               Delete
                             </button>
