@@ -64,7 +64,6 @@ export class UpdateRecetteComponent implements OnInit {
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.getRecette();
-    console.log(this.recette);
     this.getCategories();
     this.getIngredient();
     this.getMotCles();
@@ -82,6 +81,8 @@ export class UpdateRecetteComponent implements OnInit {
       this.recetteService.getRecetteById(this.id).subscribe(
         (data) => {
           this.recette = data;
+          console.log(this.recette);
+
         },
         (error) => {
           console.log(error);
@@ -213,7 +214,6 @@ export class UpdateRecetteComponent implements OnInit {
         break;
       } else this.clearErrorMessages(10);
     }
-    console.log(this.errorMessages);
 
     if (valid) {
       this.recetteService

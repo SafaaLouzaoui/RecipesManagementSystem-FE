@@ -45,8 +45,8 @@
               <p class="card-text">{{ingredient.description}}</p>
               <img src="'../../assets/images/ingredients/{{ingredient.media}}" width="100" height="100" loading="lazy" style="border-radius: 50%; object-fit: cover;"
                 class="w-100 card-banner">
-                <button  class="button-10" *ngIf="ingredient.id !== undefined && authUser.role == 'ADMIN'" (click)="deleteIngredient(ingredient.id)">Delete</button>
-                <button class="button-10" *ngIf="ingredient.id !== undefined && authUser.role == 'ADMIN'" [routerLink]="['/ingredients/update', ingredient.id]">Update</button>
+                <button  class="button-10" *ngIf="ingredient.id !== undefined && (authUser.role == 'ADMIN' || authUser.role === undefined)" (click)="deleteIngredient(ingredient.id)">Delete</button>
+                <button class="button-10" *ngIf="ingredient.id !== undefined && (authUser.role == 'ADMIN' || authUser.role === undefined)" [routerLink]="['/ingredients/update', ingredient.id]">Update</button>
             </div>
           </li>
 

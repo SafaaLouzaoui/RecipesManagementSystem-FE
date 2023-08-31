@@ -1,3 +1,4 @@
+import { Quantite } from './../models/quantite';
 import { AuthService } from './../services/auth.service';
 import { UpdateRecetteComponent } from './../update-recette/update-recette.component';
 import { CommentaireService } from './../services/commentaire.service';
@@ -20,7 +21,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 
 export class ViewRecetteComponent {
-  recette: Recette = {} as Recette;
+  recette: Recette = {};
   slideIndex = 1;
   //////slider
   urlMedia: Array<Media[]> = [];
@@ -31,6 +32,12 @@ export class ViewRecetteComponent {
   comment: string = '';
 
   idAuth?: any;
+
+  quantites: Quantite[] = [];
+
+  follow: string = '';
+
+  utilisateurCreateur?: Personne;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +54,12 @@ export class ViewRecetteComponent {
     this.getRecette();
     this.getCreateurRecette(this.recette.idCreateur);
     this.calculateTimedifference();
+    console.log(this.utilisateurCreateur?.id);
+    //pass utilisateurCreateur in argument
+    let bol = this.mesFollowers(1);
+    if(bol){
+      this.follow = 'followed';
+    }
   }
 
   scrollDown() {
@@ -59,6 +72,7 @@ export class ViewRecetteComponent {
     this.recetteService.getRecetteById(id).subscribe(
       (data: Recette) => {
         this.recette = data;
+        this.utilisateurCreateur = data.utilisateurCreateur;
         if (this.recette.medias) {
           let i = 1;
           for (const media of this.recette.medias) {
@@ -181,5 +195,30 @@ export class ViewRecetteComponent {
   refreshPage() {
     // Reload the current page to display the updated comments
     window.location.reload();
+  }
+
+  followUser(id: any, idd: any) {
+    if(this.follow === 'follow') {
+      this.personneService.abonner(id, idd, this.recette);
+      this.follow = 'followed';
+    }
+  }
+
+  mesFollowers(id: any) :boolean{
+    this.personneService.mesFollowers(id).subscribe(
+      (data) => {
+        for(let folloer of data){
+          if(this.idAuth === folloer.id){
+            return true;
+          }
+        }
+        return false;
+      },
+      (error) => {
+        console.log(error);
+        return false;
+      }
+    );
+      return false;
   }
 }

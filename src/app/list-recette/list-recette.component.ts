@@ -37,6 +37,7 @@ export class ListRecetteComponent implements OnInit {
     }
 
     this.getAuthenticatedUser();
+    console.log(this.authUser.role);
 
   }
 

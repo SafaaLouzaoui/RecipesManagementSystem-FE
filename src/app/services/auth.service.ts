@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { Personne } from '../models/personne';
 
 @Injectable({
@@ -124,16 +124,19 @@ export class AuthService {
     return this.personneService.showOnePerson(id);
   }
 
-  async isUserInRole(requiredRole: string): Promise<boolean> {
-    try {
-      const user = await this.getAuthenticatedUser().toPromise();
-      const userRole = user?.role;
-
-      return userRole === requiredRole;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
+  isUserInRole(requiredRole: string): Observable<boolean> {
+    return this.getAuthenticatedUser().pipe(
+      switchMap(user => {
+        const userRole = user?.role;
+        return of(userRole === requiredRole);
+      }),
+      catchError(error => {
+        console.log(error);
+        return of(false);
+      })
+    );
   }
+
+
 
 }

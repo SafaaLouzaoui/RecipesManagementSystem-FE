@@ -4,7 +4,7 @@ import { Profil } from "./profil";
 import { Recette } from "./recette";
 
 export class Personne {
-  id?:number
+  id?:number;
   adresseMail?:string;
   motDePasse?:string;
   nomComplet?:string;

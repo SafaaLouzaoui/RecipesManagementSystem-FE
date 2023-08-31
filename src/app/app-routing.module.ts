@@ -28,13 +28,13 @@ const routes: Routes = [
   {path:'header',component:HeaderComponent},
   {path:'footer',component:FooterComponent},
   {path:'home',component:HomeComponent},
-  {path:'recettes/update/:id',component:UpdateRecetteComponent, canActivate: [AuthClassGuard], data: { requiredRoles: ['ADMIN'] }},
+  {path:'recettes/update/:id',component:UpdateRecetteComponent, canActivate: [AuthClassGuard]},
   {path:'mes-recettes/update/:id',component:UpdateRecetteComponent, canActivate: [AuthClassGuard]},
   {path:'categories',component:ListCategorieComponent},
-  {path:'categories/add',component:AddCategorieComponent, canActivate: [AuthClassGuard], data: { requiredRoles: ['ADMIN'] } },
-  {path:'categories/update/:id',component:AddCategorieComponent, canActivate: [AuthClassGuard], data: { requiredRoles: ['ADMIN'] }},
-  {path:'ingredients/add',component:AddIngredientComponent, canActivate: [AuthClassGuard], data: { requiredRoles: ['ADMIN'] }},
-  {path:'ingredients/update/:id',component:AddIngredientComponent, canActivate: [AuthClassGuard], data: { requiredRoles: ['ADMIN'] } },
+  {path:'categories/add',component:AddCategorieComponent, canActivate: [AuthClassGuard]},
+  {path:'categories/update/:id',component:AddCategorieComponent, canActivate: [AuthClassGuard]},
+  {path:'ingredients/add',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
+  {path:'ingredients/update/:id',component:AddIngredientComponent, canActivate: [AuthClassGuard]},
   {path:'ingredients',component:ListIngredientComponent},
 
 

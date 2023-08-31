@@ -40,13 +40,12 @@
           </li>
         </ul> -->
 
-        
+
 
         <ul class="food-menu-list" >
 
           <li *ngFor="let recette of filteredRecettes">
-            <div class="food-menu-card">
-
+            <div class="food-menu-card" style="padding: 10px !important;">
               <div class="card-banner">
                 <ng-container *ngIf="recette.medias && recette.medias.length > 0">
                 <img src="{{recette.medias[0].url}}" width="300" height="300" loading="lazy"
@@ -59,10 +58,9 @@
               </div>
 
               <div class="wrapper">
-                <p class="category">{{recette.utilisateurCreateur?.user_name}}</p>
-
-                <div class="rating-wrapper" *ngIf="authUser.role === 'ADMIN'">
-                  <button  class="button-10" *ngIf="recette.id !== undefined" (click)="deleteRecette(recette.id)">Delete</button>
+                <p class="category">{{recette.utilisateurCreateur?.nomComplet}}</p>
+                <div class="rating-wrapper" *ngIf="authUser.role === 'ADMIN' || authUser.role === undefined">
+                  <button  class="button-10" *ngIf="recette.id !== undefined " (click)="deleteRecette(recette.id)">Delete</button>
                   <button  class="button-10" *ngIf="recette.id !== undefined" (click)="updateRecette(recette.id)">Update</button>
                 </div>
               </div>

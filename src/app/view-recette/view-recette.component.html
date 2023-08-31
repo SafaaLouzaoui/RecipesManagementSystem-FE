@@ -28,7 +28,7 @@
             </div>
             <div class="w3-container">
               <!-- TODO add a router link to redirect to the profile -->
-              <button
+              <div
                 style="
                   background: none;
                   width: 100%;
@@ -60,9 +60,23 @@
                   <h5>
                     {{ recette.utilisateurCreateur?.nomComplet }}
                   </h5>
+                  <!-- <button
+                  [(ngModel)]="follow"
+                  style="
+                  background: orange;
+                  width: 100px;
+                  color: black;
+                  font-weight: bold;
+                  border-radius: 5px;
+                  box-shadow: 2px 2px 0px 2px rgb(214, 147, 22);
+                  border: 1px solid orange !important;
+                  height: 40px;
+                  padding: 5px;
+                  margin-left: 10px;
+                " (click)="followUser(recette.utilisateurCreateur?.id, idAuth)">{{ follow }}</button> -->
                   <!-- <img src="../../assets/images/avatar-1.jpg" alt=""> -->
                 </div>
-              </button>
+              </div>
               <h3 class="h3 section-title">
                 <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i
                 >Preparation time :
@@ -91,12 +105,25 @@
         <div class="w3-twothird">
           <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="h2 section-title">
-              <span class="span">Chef</span>
+              <span class="span">Categories</span>
             </h2>
-            <div class="w3-container">
-              <h5 class="infosChef">
-                {{ recette.utilisateurCreateur?.nomComplet }}
-              </h5>
+            <div
+              class="w3-container"
+              *ngFor="let cat of recette.categories"
+              style="display: flex"
+            >
+              <div class="comment-avatar">
+                <!-- Replace this with the URL of the commenter's avatar image -->
+                <img
+                  src="'../../assets/images/categories/{{ cat.media }}"
+                  alt="Default User Avatar"
+                />
+                <!-- <img src="../../assets/images/avatar-1.jpg" alt=""> -->
+              </div>
+              <h3 class="h3 section-title">
+                <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i
+                >{{ cat.nomCat }}
+              </h3>
             </div>
           </div>
 
@@ -104,29 +131,16 @@
             <h2 class="h2 section-title">
               <span class="span">Ingredients</span>
             </h2>
-            <div class="w3-container">
-              <ul class="custom-list">
-                <li
-                  class="custom-item"
-                  *ngFor="let ingredient of recette.ingredients"
-                >
-                  <ion-icon name="checkmark-outline"></ion-icon>
-                  <span class="span">{{ ingredient.nom }}</span>
-                </li>
-                <hr />
-              </ul>
-              <ul class="custom-list">
-                <li
-                  class="custom-item"
-                  *ngFor="let quantite of recette.quantites"
-                >
-                  <span class="span"
-                    >{{ quantite.nombre }} {{ quantite.uniteDeMesure }}</span
-                  >
-                </li>
-                <hr />
-              </ul>
+            <div class="w3-container" *ngFor="let ing of recette.ingredients; let i = index" style="display: flex">
+              <div class="comment-avatar">
+                <img src="'../../assets/images/ingredients/{{ ing.media }}" alt="404" />
+              </div>
+              <h3 class="h3 section-title">
+                <i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>
+                {{ ing.nom }}
+              </h3>
             </div>
+
           </div>
           <div class="w3-container w3-card w3-white">
             <h2 class="h2 section-title">

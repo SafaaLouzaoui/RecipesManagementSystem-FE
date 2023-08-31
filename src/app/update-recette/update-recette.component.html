@@ -347,20 +347,21 @@
         <div class="child-form" *ngFor="let cat of recette.categories; let i = index">
           <p>Categorie {{ i + 1 }}</p>
           <select
-            [(ngModel)]="recette.categories[i]"
-            class="form-select"
-            aria-label="Default select example"
-            name="categorie"
-            required
-            #categoriSelect="ngModel"
-          >
-            <option [ngValue]="recette.categories[i]">
-              {{ recette.categories[i].nomCat }}
-            </option>
-            <option *ngFor="let categorie of categoriess" [ngValue]="categorie">
-              {{ categorie.nomCat }}
-            </option>
-          </select>
+              [(ngModel)]="recette.categories"
+              ngModel
+              required
+              #categoriSelect="ngModel"
+              class="form-select"
+              aria-label="Default select example"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option [ngValue]="recette.categories[i]">
+                {{ recette.categories[i].nomCat }}
+              </option>
+              <option *ngFor="let categorie of categoriess" [ngValue]="categorie">
+                {{ categorie.nomCat }}
+              </option>
+            </select>
           <div
             class="alert alert-danger"
             *ngIf="categoriSelect.invalid && categoriSelect.touched"

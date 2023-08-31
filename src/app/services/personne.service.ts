@@ -14,6 +14,7 @@ export class PersonneService {
   url4 = 'http://localhost:8083/api/v1/utilisateurs/modifier/';
   url5 = 'http://localhost:8083/api/v1/utilisateurs/activer/';
   url6 = 'http://localhost:8083/api/v1/utilisateurs/promote/';
+  url7 = 'http://localhost:8083/api/v1/utilisateurs/mesFollowers';
 
   private token = localStorage.getItem('access_token');
   private headers = new HttpHeaders().set(
@@ -76,7 +77,7 @@ export class PersonneService {
   // public LoginUser(personne?: Personne): Observable<Object> {
   //   return this.http.post(this.url7, personne);
   // }
-  public Abonner(
+  public abonner(
     id: number,
     idd: number,
     recette: Recette
@@ -84,5 +85,11 @@ export class PersonneService {
     const url =
       'http://localhost:8083/api/v1/utilisateurs/abonner/' + id + '/' + idd;
     return this.http.post(url, recette, { headers: this.headers });
+  }
+
+  public mesFollowers(id: number): Observable<Personne[]> {
+    // Append the id parameter to the URL
+    const urlWithId = `${this.url7}/${id}`;
+    return this.http.get<Personne[]>(urlWithId, { headers: this.headers });
   }
 }
